@@ -23,7 +23,7 @@ const MobileFooter = () => {
             className={`mobile-footer-item ${
               pathname === "/search" && "active"
             }`}
-            onClick={() => router.push("/search")}
+            onClick={() => router.push("/")}
           >
             <img src="/images/search.png" />
             Хайх
