@@ -82,130 +82,132 @@ export default function Page() {
       </div>
       <section>
         <div className="login_page">
-          <h4> Нууц үгээ мартсан </h4>
-          <Form
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-            form={form}
-          >
-            <Form.Item
-              name="phoneNumber"
-              rules={[
-                {
-                  required: true,
-                  message: "Та өөрийн бүртгэлтэй утасны дугаараа оруулна уу!",
-                },
-              ]}
-              className="loginInput"
-            >
-              <InputNumber
-                size="large"
-                style={{ width: "100%", borderRadius: "2px" }}
-                placeholder="Та утасны дугаараа оруулна уу"
-                disabled={code}
-              />
-            </Form.Item>
-            {code === true && (
-              <>
+          <div className="container">
+              <h4> Нууц үгээ мартсан </h4>
+              <Form
+                name="basic"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                form={form}
+              >
                 <Form.Item
-                  className="loginInput"
-                  name="otp"
+                  name="phoneNumber"
                   rules={[
                     {
                       required: true,
-                      message: "Баталгаажуулах кодоо оруулна уу!",
+                      message: "Та өөрийн бүртгэлтэй утасны дугаараа оруулна уу!",
                     },
                   ]}
+                  className="loginInput"
                 >
                   <InputNumber
                     size="large"
                     style={{ width: "100%", borderRadius: "2px" }}
-                    placeholder="Баталгаажуулах кодоо оруулна уу"
-                  />
-                </Form.Item>{" "}
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Тус талбарыг заавал бөглөнө үү",
-                    },
-                  ]}
-                  className="loginInput"
-                  hasFeedback
-                >
-                  <Input.Password
-                    size="large"
-                    style={{ width: "100%", borderRadius: "2px" }}
-                    placeholder="Нууц үгээ оруулна уу"
+                    placeholder="Та утасны дугаараа оруулна уу"
+                    disabled={code}
                   />
                 </Form.Item>
-                <Form.Item
-                  name="confirm"
-                  dependencies={["password"]}
-                  className="loginInput"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Тус талбарыг заавал бөглөнө үү",
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
+                {code === true && (
+                  <>
+                    <Form.Item
+                      className="loginInput"
+                      name="otp"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Баталгаажуулах кодоо оруулна уу!",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                        size="large"
+                        style={{ width: "100%", borderRadius: "2px" }}
+                        placeholder="Баталгаажуулах кодоо оруулна уу"
+                      />
+                    </Form.Item>{" "}
+                    <Form.Item
+                      name="password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Тус талбарыг заавал бөглөнө үү",
+                        },
+                      ]}
+                      className="loginInput"
+                      hasFeedback
+                    >
+                      <Input.Password
+                        size="large"
+                        style={{ width: "100%", borderRadius: "2px" }}
+                        placeholder="Нууц үгээ оруулна уу"
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      name="confirm"
+                      dependencies={["password"]}
+                      className="loginInput"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Тус талбарыг заавал бөглөнө үү",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
 
-                        return Promise.reject(
-                          new Error(
-                            "Эхний оруулсан нууц үгтэй тохирохгүй байна!"
-                          )
-                        );
-                      },
-                    }),
-                  ]}
-                  hasFeedback
-                >
-                  <Input.Password
-                    size="large"
-                    style={{ width: "100%", borderRadius: "2px" }}
-                    placeholder="Нууц үгээ давтан оруулна уу"
-                  />
-                </Form.Item>
-              </>
-            )}
-            {code === false && (
-              <Form.Item className="login-btn-box">
-                <Button
-                  size="large"
-                  loading={contentLoad}
-                  className="loginBtn"
-                  onClick={handleNext}
-                >
-                  Үргэлжлүүлэх
-                </Button>
-              </Form.Item>
-            )}
+                            return Promise.reject(
+                              new Error(
+                                "Эхний оруулсан нууц үгтэй тохирохгүй байна!"
+                              )
+                            );
+                          },
+                        }),
+                      ]}
+                      hasFeedback
+                    >
+                      <Input.Password
+                        size="large"
+                        style={{ width: "100%", borderRadius: "2px" }}
+                        placeholder="Нууц үгээ давтан оруулна уу"
+                      />
+                    </Form.Item>
+                  </>
+                )}
+                {code === false && (
+                  <Form.Item className="login-btn-box">
+                    <Button
+                      size="large"
+                      loading={contentLoad}
+                      className="loginBtn"
+                      onClick={handleNext}
+                    >
+                      Үргэлжлүүлэх
+                    </Button>
+                  </Form.Item>
+                )}
 
-            {code === true && (
-              <Form.Item className="login-btn-box">
-                <Button
-                  size="large"
-                  loading={contentLoad}
-                  className="loginBtn"
-                  onClick={handleChangePassword}
-                >
-                  Нууц үгээ солих
-                </Button>
-              </Form.Item>
-            )}
-          </Form>
-          <div className="login-page-register">
-            Танд бүртгэл байгаа бол <Link href="/login"> энд дарна </Link> уу
+                {code === true && (
+                  <Form.Item className="login-btn-box">
+                    <Button
+                      size="large"
+                      loading={contentLoad}
+                      className="loginBtn"
+                      onClick={handleChangePassword}
+                    >
+                      Нууц үгээ солих
+                    </Button>
+                  </Form.Item>
+                )}
+              </Form>
+              <div className="login-page-register">
+                Танд бүртгэл байгаа бол <Link href="/login"> энд дарна </Link> уу
+              </div>
           </div>
         </div>
       </section>
