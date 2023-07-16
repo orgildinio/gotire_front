@@ -1563,7 +1563,7 @@ button.shop-btn:hover {
   justify-content: center;
   width: 100%;
   background: #35358a;
-  border: 2px solid #0093a3;
+  border: 2px solid #0072b1;
   color: #fff;
   border-radius: 2px;
   font-size: 14px;
@@ -1578,7 +1578,7 @@ button.shop-btn:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #35358a;
+
   width: 100%;
 }
 
