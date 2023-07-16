@@ -120,7 +120,7 @@ const Map = ({ latitude, longitude, children }) => {
   }, [ref, map, latitude, longitude]);
 
   const marker = new google.maps.Marker({
-    position: { lat: 47.91599393612535, lng: 106.89541829162692 },
+    position: { lat: 47.88753954758411, lng: 106.70178833266172 },
     map: map,
   });
 
