@@ -94,7 +94,7 @@ const SearchWheelBox = () => {
                 <p> Төрөл: </p> <span> {car.name}</span>
               </div>
               <div className="car-info-tires">
-                <p> Таарах стандарт хэмжээнүүп: </p>
+                <p> Таарах стандарт хэмжээнүүд: </p>
                 {car.wheels &&
                   car.wheels.map((wheel) => <span> {wheel.front.rim} </span>)}
               </div>
