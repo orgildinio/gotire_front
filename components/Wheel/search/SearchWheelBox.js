@@ -78,6 +78,29 @@ const SearchWheelBox = () => {
   return (
     <>
       <div className="product-search-side ">
+      {car && (
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Таны сонгосон машин </p>
+            </div>
+            <div className="search-side-body car-infos">
+              <div className="car-info">
+                <p> Үйлдвэрлэгч: </p> <span> {car.make.name}</span>
+              </div>
+              <div className="car-info">
+                <p> Загвар: </p> <span> {car.model.name}</span>
+              </div>
+              <div className="car-info">
+                <p> Төрөл: </p> <span> {car.name}</span>
+              </div>
+              <div className="car-info-tires">
+                <p> Таарах стандарт хэмжээнүүп: </p>
+                {car.wheels &&
+                  car.wheels.map((wheel) => <span> {wheel.front.rim} </span>)}
+              </div>
+            </div>
+          </div>
+        )}
         <div className="search-side-item">
           <div className="search-side-title">
             <p> Диаметр </p>
