@@ -309,9 +309,9 @@ export const SearchProvider = ({ children }) => {
         setCar(carData[0]);
 
         let wheels = carData[0].wheels;
-        carData[0].map((car) => {
-          wheels = [...car.wheels];
-        });
+        // carData[0].map((car) => {
+        //   wheels = [...car.wheels];
+        // });
 
         if (wheels && wheels.length > 0) {
           let tiresizes = "";
