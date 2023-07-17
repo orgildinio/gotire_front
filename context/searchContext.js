@@ -304,7 +304,7 @@ export const SearchProvider = ({ children }) => {
       );
 
       if (result) {
-        const carData = result.data.data;
+        const carData = result.data;
 
         setCar(carData);
 
