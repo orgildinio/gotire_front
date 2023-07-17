@@ -325,7 +325,7 @@ export const SearchProvider = ({ children }) => {
     };
 
     if (query || query !== "user_key=5c53c728656ad6ab73949f3ff71230c8") {
-      fetchData();
+      fetchData().catch(err => console.log(err));
     }
   }, [searchParams]);
 
