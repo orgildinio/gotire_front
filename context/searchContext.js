@@ -304,9 +304,9 @@ export const SearchProvider = ({ children }) => {
       );
         console.log(result)
       if (result) {
-        const carData = result.data;
+        const carData = result.data.data;
 
-        setCar(carData);
+        setCar(carData[0]);
 
         let wheels = car.wheels;
         car.map((car) => {
