@@ -302,7 +302,7 @@ export const SearchProvider = ({ children }) => {
       const result = await axios.get(
         `https://api.wheel-size.com/v2/search/by_model/?${query}`
       );
-
+        console.log(result)
       if (result) {
         const carData = result.data;
 
