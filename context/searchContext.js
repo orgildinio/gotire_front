@@ -308,8 +308,8 @@ export const SearchProvider = ({ children }) => {
 
         setCar(carData[0]);
 
-        let wheels = car.wheels;
-        car.map((car) => {
+        let wheels = carData[0].wheels;
+        carData[0].map((car) => {
           wheels = [...car.wheels];
         });
 
