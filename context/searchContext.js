@@ -303,7 +303,7 @@ export const SearchProvider = ({ children }) => {
         `https://api.wheel-size.com/v2/search/by_model/?${query}`
       );
 
-      if (car) {
+      if (result) {
         const carData = result.data.data;
 
         setCar(carData);
