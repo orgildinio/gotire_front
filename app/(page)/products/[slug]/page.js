@@ -13,7 +13,7 @@ import ImageGallery from "react-image-gallery";
 
 export default function Page({ params: { slug } }) {
   const [product, setProduct] = useState(null);
-  const [qty, setQty] = useState([]);
+  const [qty, setQty] = useState(1);
   const [image, setImage] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -39,12 +39,6 @@ export default function Page({ params: { slug } }) {
           thumbnail: base.cdnUrl + "/150x150/" + picture,
         })
       );
-      const arrayQty = [];
-      for (let index = 1; index <= product.setOf.length; index++) {
-        arrayQty.push(<option value={index}> {index} </option>);
-      }
-
-      setQty(arrayQty);
 
       setImage(img);
     }
@@ -116,8 +110,30 @@ export default function Page({ params: { slug } }) {
                 <div className="divider-dashed" role="separator"></div>
                 <div className="qty-box">
                   <span> Тоо ширхэг</span>
-                  <input />
+                  <div className="qty-controls">
+                    <button
+                      className="qty-control"
+                      onClick={() => {
+                        qty - 1 > 0 && setQty((bq) => bq - 1);
+                      }}
+                    >
+                      -
+                    </button>
+                    <p> {qty} </p>
+                    <button
+                      className="qty-control"
+                      onClick={() => {
+                        qty + 1 <= product.setOf && setQty((bq) => bq + 1);
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span className="setof-count">
+                    {product.setOf} ширхэг бэлэн байна
+                  </span>
                 </div>
+
                 <div className="product-shop-btns">
                   <button className="cart-btn">Сагсанд нэмэх</button>
                   <button className="shop-btn">Худалдан авах</button>
