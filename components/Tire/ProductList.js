@@ -3,7 +3,7 @@ import { useSearchContext } from "context/searchContext";
 import base from "lib/base";
 import Link from "next/link";
 import { Select } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { useNotificationContext } from "context/notificationContext";
@@ -26,6 +26,7 @@ const ProductList = () => {
   const { contentLoad } = useNotificationContext();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const queryBuild = (name, value, isSame = false) => {
     let query = "?";
@@ -38,6 +39,34 @@ const ProductList = () => {
     router.push(pathname + query + params);
   };
 
+  const handleDelete = (name, value) => {
+    let isSame = false;
+    let params = searchParams.get(name);
+    let setParams = [];
+
+    if (params) {
+      setParams = params.split(",");
+    }
+
+    if (setParams.length > 0) {
+      const filter = setParams.filter((el) => el == value);
+      if (filter.length > 0) {
+        filter.map((same) =>
+          setParams.splice(
+            setParams.findIndex((e) => e === same),
+            1
+          )
+        );
+      } else {
+        setParams.push(value);
+      }
+    } else {
+      setParams.push(value);
+    }
+
+    queryBuild(name, setParams, isSame);
+  };
+
   useEffect(() => {
     if (wheelsize) {
       const params = createQueryString("tiresize", wheelsize);
@@ -47,11 +76,6 @@ const ProductList = () => {
 
   const handleChange = (value) => {
     queryBuild("sort", value);
-  };
-
-  const handleDelete = (name, data) => {
-    const params = removeQuery(name, data);
-    router.push(pathname + "?" + params);
   };
 
   const nextpage = () => {
@@ -124,7 +148,7 @@ const ProductList = () => {
       <div className="row gy-4">
         {tires &&
           tires.map((tire) => (
-            <div className="col-lg-3 col-md-4 col-sm-6 col-6">
+            <div className="col-lg-2 col-md-3 col-sm-6 col-6">
               <Link href={`/tires/${tire.slug}`}>
                 <div className="product-item">
                   <div className="product-item-img">

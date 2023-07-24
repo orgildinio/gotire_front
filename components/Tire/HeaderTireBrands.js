@@ -36,12 +36,12 @@ const HeaderTireBrands = () => {
         <Swiper
           autoHeight={true}
           simulateTouch="false"
-          slidesPerView={8.5}
+          slidesPerView={10.5}
           spaceBetween={20}
           className="brand-slider"
           breakpoints={{
             1399: {
-              slidesPerView: 8.5,
+              slidesPerView: 10.5,
             },
             1200: {
               slidesPerView: 7.5,
@@ -64,20 +64,20 @@ const HeaderTireBrands = () => {
             },
 
             400: {
-              slidesPerView: 3.5,
-            },
-
-            300: {
               slidesPerView: 2.5,
             },
 
+            300: {
+              slidesPerView: 2.4,
+            },
+
             230: {
-              slidesPerView: 2.2,
+              slidesPerView: 1.4,
               spaceBetween: 10,
             },
 
             100: {
-              slidesPerView: 1.2,
+              slidesPerView: 1.3,
             },
           }}
         >

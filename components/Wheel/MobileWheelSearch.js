@@ -9,11 +9,13 @@ import { useSearchContext } from "context/searchContext";
 
 import { Slider } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchWheelContext } from "context/searchWheelContext";
+import { getCategory } from "lib/categories";
 
 const MobileWheelSearch = () => {
   const { search, createQueryString, removeQuery } = useSearchWheelContext();
+  const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState(false);
   const [sorter, setSorter] = useState(false);
   const formatter = (value) => `${new Intl.NumberFormat().format(value)}₮`;
@@ -108,16 +110,25 @@ const MobileWheelSearch = () => {
     else return false;
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { categories } = await getCategory("wheel");
+      setCategories(categories);
+    };
+
+    fetchData().catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <div className="mobile-search-box">
         <div className="container">
           <div className="mobile-search-buttons">
             <button onClick={() => setFilter(true)}>
-              Шүүлт <FontAwesomeIcon icon={faFilter} />
+              <FontAwesomeIcon icon={faFilter} /> Шүүлтүүр
             </button>
             <button onClick={() => setSorter(true)}>
-              Эрэмбэлэх <FontAwesomeIcon icon={faSortAmountDown} />
+              <FontAwesomeIcon icon={faSortAmountDown} /> Эрэмбэлэх
             </button>
           </div>
         </div>
@@ -132,6 +143,34 @@ const MobileWheelSearch = () => {
         <div className="container">
           <div className="mobile-search-close" onClick={() => setFilter(false)}>
             <FontAwesomeIcon icon={faClose} />
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Ангилал </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list list-full">
+                {categories &&
+                  categories.map((category, index) => (
+                    <button
+                      onClick={() =>
+                        handleMultSelect(
+                          "categoryname",
+                          `${category.name.toLowerCase()}`
+                        )
+                      }
+                      className={`${
+                        activeCheck(
+                          "categoryname",
+                          `${category.name.toLowerCase()}`
+                        ) === true && "active"
+                      }`}
+                    >
+                      {category.name} ({category.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
           </div>
           <div className="search-side-item">
             <div className="search-side-title">
@@ -151,7 +190,7 @@ const MobileWheelSearch = () => {
                         "active"
                       }`}
                     >
-                      R{diameter.name}
+                      {diameter.name} инч ({diameter.count})
                     </button>
                   ))}
               </div>
@@ -173,7 +212,7 @@ const MobileWheelSearch = () => {
                         "active"
                       }`}
                     >
-                      {width.name}
+                      {width.name} ({width.count})
                     </button>
                   ))}
               </div>
@@ -197,7 +236,7 @@ const MobileWheelSearch = () => {
                           true && "active"
                       }`}
                     >
-                      {boltPattern.name}
+                      {boltPattern.name} ({boltPattern.count})
                     </button>
                   ))}
               </div>
@@ -218,7 +257,7 @@ const MobileWheelSearch = () => {
                         activeCheck("rim", `${rim.name}`) === true && "active"
                       }`}
                     >
-                      {rim.name}
+                      {rim.name} ({rim.count})
                     </button>
                   ))}
               </div>
@@ -242,7 +281,7 @@ const MobileWheelSearch = () => {
                           true && "active"
                       }`}
                     >
-                      {threadSize.name}
+                      {threadSize.name} ({threadSize.count})
                     </button>
                   ))}
               </div>
@@ -266,7 +305,7 @@ const MobileWheelSearch = () => {
                           true && "active"
                       }`}
                     >
-                      {centerBore.name}
+                      {centerBore.name} ({centerBore.count})
                     </button>
                   ))}
               </div>
@@ -288,7 +327,7 @@ const MobileWheelSearch = () => {
                         "active"
                       }`}
                     >
-                      {setOf.name}
+                      {setOf.name} ({setOf.count})
                     </button>
                   ))}
               </div>

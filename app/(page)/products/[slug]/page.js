@@ -5,14 +5,15 @@ import Loader from "components/Generals/Loader";
 import NotFound from "components/Generals/Notfound";
 import RandomTire from "components/Product/RandomTire";
 import base from "lib/base";
-import { getWheel } from "lib/wheel";
+import { getProduct } from "lib/product";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 
 export default function Page({ params: { slug } }) {
-  const [wheel, setWheel] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [qty, setQty] = useState([]);
   const [image, setImage] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -20,8 +21,9 @@ export default function Page({ params: { slug } }) {
   useEffect(() => {
     window.scrollTo(0, 0);
     const fetchData = async () => {
-      const { wheel } = await getWheel(slug);
-      setWheel(wheel);
+      const { product } = await getProduct(slug);
+
+      setProduct(product);
       setLoading(false);
     };
 
@@ -29,17 +31,24 @@ export default function Page({ params: { slug } }) {
   }, []);
 
   useEffect(() => {
-    if (wheel) {
+    if (product) {
       let img = [];
-      wheel.pictures.map((picture) =>
+      product.pictures.map((picture) =>
         img.push({
           original: base.cdnUrl + "/" + picture,
           thumbnail: base.cdnUrl + "/150x150/" + picture,
         })
       );
+      const arrayQty = [];
+      for (let index = 1; index <= product.setOf.length; index++) {
+        arrayQty.push(<option value={index}> {index} </option>);
+      }
+
+      setQty(arrayQty);
+
       setImage(img);
     }
-  }, [wheel]);
+  }, [product]);
 
   if (loading === true) {
     return (
@@ -53,7 +62,7 @@ export default function Page({ params: { slug } }) {
     );
   }
 
-  if (!wheel) {
+  if (!product) {
     return (
       <>
         <section>
@@ -75,8 +84,8 @@ export default function Page({ params: { slug } }) {
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
                   <div className="page-header-title">
-                    <h2>{wheel.name}</h2>
-                    <span>#{wheel.wheelCode}</span>
+                    <h2>{product.name}</h2>
+                    <span>#{product.productCode}</span>
                   </div>
                 </div>
               </div>
@@ -84,70 +93,34 @@ export default function Page({ params: { slug } }) {
             </div>
             <div className="col-lg-4">
               <div className="product-side sticky-top">
-                {wheel.isDiscount === false && (
+                {product.isDiscount === false && (
                   <div className="price-box">
                     <span> Үндсэн үнэ: </span>
-                    <h4> {new Intl.NumberFormat().format(wheel.price)}₮ </h4>
+                    <h4> {new Intl.NumberFormat().format(product.price)}₮ </h4>
                   </div>
                 )}
-                {wheel.isDiscount === true && (
+                {product.isDiscount === true && (
                   <div className="discount-box">
                     <div className="discount-price">
                       <span> Хямдралтай үнэ: </span>
                       <h4>
-                        {new Intl.NumberFormat().format(wheel.discount)}₮{" "}
+                        {new Intl.NumberFormat().format(product.discount)}₮{" "}
                       </h4>
                     </div>
                     <div className="init-price">
                       <span> Анхны үнэ: </span>
-                      <h4>{new Intl.NumberFormat().format(wheel.price)}₮ </h4>
+                      <h4>{new Intl.NumberFormat().format(product.price)}₮ </h4>
                     </div>
                   </div>
                 )}
                 <div className="divider-dashed" role="separator"></div>
-
-                <table className="products-dtl">
-                  <tr>
-                    <th>Диаметр: </th>
-                    <td>{wheel.diameter} инч</td>
-                  </tr>
-                  <tr>
-                    <th>Өргөн (J): </th>
-                    <td>{wheel.width}</td>
-                  </tr>
-
-                  <tr>
-                    <th>Тоо ширхэг: </th>
-                    <td>{wheel.setOf} ширхэг</td>
-                  </tr>
-
-                  <tr>
-                    <th>Болтны зай: </th>
-                    <td>{wheel.boltPattern} </td>
-                  </tr>
-
-                  <tr>
-                    <th>Болтны хэмжээ: </th>
-                    <td>{wheel.threadSize} </td>
-                  </tr>
-                  <tr>
-                    <th>Голын диаметр: </th>
-                    <td>{wheel.centerBore} </td>
-                  </tr>
-                  <tr>
-                    <th>RIM: </th>
-                    <td>{wheel.rim} </td>
-                  </tr>
-                </table>
-
-                <div className="divider-dashed" role="separator"></div>
+                <div className="qty-box">
+                  <span> Тоо ширхэг</span>
+                  <input />
+                </div>
                 <div className="product-shop-btns">
                   <button className="cart-btn">Сагсанд нэмэх</button>
                   <button className="shop-btn">Худалдан авах</button>
-                </div>
-                <div className="divider-dashed" role="separator"></div>
-                <div className="product-services">
-                  <div className="product-service"></div>
                 </div>
               </div>
             </div>
@@ -158,7 +131,7 @@ export default function Page({ params: { slug } }) {
                 <div
                   className={`product-detials`}
                   dangerouslySetInnerHTML={{
-                    __html: wheel.details,
+                    __html: product.details,
                   }}
                 ></div>
               </div>

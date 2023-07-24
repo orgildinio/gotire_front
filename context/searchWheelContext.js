@@ -43,6 +43,7 @@ export const SearchWheelProvider = ({ children }) => {
     let fields = [];
 
     const searchFields = [
+      "categoryname",
       "diameter",
       "width",
       "boltPattern",
@@ -249,6 +250,7 @@ export const SearchWheelProvider = ({ children }) => {
     let fields = [];
 
     const searchFields = [
+      "categoryname",
       "diameter",
       "width",
       "boltPattern",

@@ -5,15 +5,17 @@ import {
   faSortAmountDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSearchContext } from "context/searchContext";
+import { useSearchSetProductContext } from "context/searchSetProductContext";
 
 import { getCategory } from "lib/categories";
 import { Slider } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const MobileTireSearch = () => {
-  const { search, createQueryString, removeQuery, car } = useSearchContext();
+const MobileSetProductSearch = () => {
+  const { search, createQueryString, removeQuery } =
+    useSearchSetProductContext();
+
   const [filter, setFilter] = useState(false);
   const [sorter, setSorter] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -24,7 +26,7 @@ const MobileTireSearch = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { categories } = await getCategory("tire");
+      const { categories } = await getCategory("setproduct");
       setCategories(categories);
     };
 
@@ -158,7 +160,7 @@ const MobileTireSearch = () => {
                           `${category.name.toLowerCase()}`
                         )
                       }
-                      className={`${
+                      className={`categoryname ${
                         activeCheck(
                           "categoryname",
                           `${category.name.toLowerCase()}`
@@ -173,13 +175,34 @@ const MobileTireSearch = () => {
           </div>
           <div className="search-side-item">
             <div className="search-side-title">
-              <p> Хэмжээ </p>
+              <p> Багц </p>
             </div>
             <div className="search-side-body">
               <div className="search-list">
                 {search &&
-                  search.tiresize &&
-                  search.tiresize.map((size, index) => (
+                  search.setOf &&
+                  search.setOf.map((set) => (
+                    <button
+                      onClick={() => handleMultSelect("setOf", set.name)}
+                      className={`${
+                        activeCheck("setOf", set.name) === true && "active"
+                      }`}
+                    >
+                      {set.name} ({set.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Дугуйны мэдээллээр </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.tire &&
+                  search.tire.tiresizeResult.map((size, index) => (
                     <button
                       onClick={() =>
                         handleMultSelect(
@@ -202,35 +225,13 @@ const MobileTireSearch = () => {
           </div>
           <div className="search-side-item">
             <div className="search-side-title">
-              <p> Хувь </p>
-            </div>
-            <div className="search-side-body">
-              <div className="search-list">
-                {search &&
-                  search.use &&
-                  search.use.map((use) => (
-                    <button
-                      onClick={() => handleMultSelect("use", use.name)}
-                      className={`${
-                        activeCheck("use", use.name) === true && "active"
-                      }`}
-                    >
-                      {parseInt(use.name) === 100 ? "Шинэ" : use.name + "%"} (
-                      {use.count})
-                    </button>
-                  ))}
-              </div>
-            </div>
-          </div>
-          <div className="search-side-item">
-            <div className="search-side-title">
               <p> Улирал </p>
             </div>
             <div className="search-side-body">
               <div className="search-list">
                 {search &&
-                  search.season &&
-                  search.season.map((season) => (
+                  search.tire.season &&
+                  search.tire.season.map((season) => (
                     <button
                       onClick={() => handleMultSelect("season", season.name)}
                       className={`${
@@ -248,20 +249,160 @@ const MobileTireSearch = () => {
           </div>
           <div className="search-side-item">
             <div className="search-side-title">
-              <p> Багц </p>
+              <p> Хувь </p>
             </div>
             <div className="search-side-body">
               <div className="search-list">
                 {search &&
-                  search.setOf &&
-                  search.setOf.map((set) => (
+                  search.tire.use &&
+                  search.tire.use.map((use) => (
                     <button
-                      onClick={() => handleMultSelect("setof", set.name)}
+                      onClick={() => handleMultSelect("use", use.name)}
                       className={`${
-                        activeCheck("setof", set.name) === true && "active"
+                        activeCheck("use", use.name) === true && "active"
                       }`}
                     >
-                      {set.name} ({set.count})
+                      {parseInt(use.name) === 100 ? "Шинэ" : use.name + "%"} (
+                      {use.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Обудын мэдээллээр </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.diameter &&
+                  search.wheel.diameter.map((diameter, index) => (
+                    <button
+                      onClick={() =>
+                        handleMultSelect("diameter", `${diameter.name}`)
+                      }
+                      className={`${
+                        activeCheck("diameter", `${diameter.name}`) === true &&
+                        "active"
+                      }`}
+                    >
+                      {diameter.name} инч ({diameter.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Өргөн </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.width &&
+                  search.wheel.width.map((width, index) => (
+                    <button
+                      onClick={() => handleMultSelect("width", `${width.name}`)}
+                      className={`${
+                        activeCheck("width", `${width.name}`) === true &&
+                        "active"
+                      }`}
+                    >
+                      {width.name} ({width.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Болтны зай </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.boltPattern &&
+                  search.wheel.boltPattern.map((boltPattern, index) => (
+                    <button
+                      onClick={() =>
+                        handleMultSelect("boltPattern", `${boltPattern.name}`)
+                      }
+                      className={`${
+                        activeCheck("boltPattern", `${boltPattern.name}`) ===
+                          true && "active"
+                      }`}
+                    >
+                      {boltPattern.name} ({boltPattern.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Болтны хэмжээ </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.threadSize &&
+                  search.wheel.threadSize.map((threadSize, index) => (
+                    <button
+                      onClick={() =>
+                        handleMultSelect("threadSize", `${threadSize.name}`)
+                      }
+                      className={`${
+                        activeCheck("threadSize", `${threadSize.name}`) ===
+                          true && "active"
+                      }`}
+                    >
+                      {threadSize.name} ({threadSize.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> Голын диаметр </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.centerBore &&
+                  search.wheel.centerBore.map((centerBore, index) => (
+                    <button
+                      onClick={() =>
+                        handleMultSelect("centerBore", `${centerBore.name}`)
+                      }
+                      className={`${
+                        activeCheck("centerBore", `${centerBore.name}`) ===
+                          true && "active"
+                      }`}
+                    >
+                      {centerBore.name} ({centerBore.count})
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+          <div className="search-side-item">
+            <div className="search-side-title">
+              <p> RIM </p>
+            </div>
+            <div className="search-side-body">
+              <div className="search-list">
+                {search &&
+                  search.wheel.rim &&
+                  search.wheel.rim.map((rim, index) => (
+                    <button
+                      onClick={() => handleMultSelect("rim", `${rim.name}`)}
+                      className={`${
+                        activeCheck("rim", `${rim.name}`) === true && "active"
+                      }`}
+                    >
+                      {rim.name} ({rim.count})
                     </button>
                   ))}
               </div>
@@ -288,35 +429,8 @@ const MobileTireSearch = () => {
           </div>
         </div>
       </div>
-      <div
-        className={`mobile-search-black ${sorter === false && "displayNone"}`}
-        onClick={() => setSorter(false)}
-      ></div>
-      <div
-        className={`mobile-search-main ${sorter === false && "displayNone"}`}
-        style={{ height: "50%" }}
-      >
-        <div className="container">
-          <div className="mobile-search-close" onClick={() => setSorter(false)}>
-            <FontAwesomeIcon icon={faClose} />
-          </div>
-          <h6> Эрэмбэлэх </h6>
-          <div className="mobile-sort-list">
-            {sort.map((el) => (
-              <button
-                onClick={() => handleSort("sort", el.value)}
-                className={`${
-                  activeCheck("sort", el.value) === true && "active"
-                }`}
-              >
-                {" "}
-                {el.label}{" "}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
     </>
   );
 };
-export default MobileTireSearch;
+
+export default MobileSetProductSearch;

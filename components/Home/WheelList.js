@@ -26,7 +26,10 @@ const WheelList = () => {
             <div className="row gy-4">
               {data &&
                 data.map((wheel) => (
-                  <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+                  <div
+                    className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6"
+                    key={wheel._id}
+                  >
                     <Link href={`/wheels/${wheel.slug}`}>
                       <div className="product-item">
                         <div className="product-item-img">

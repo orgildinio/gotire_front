@@ -1,22 +1,27 @@
 "use client";
-import axios from "axios";
-import { getSearch, getTires } from "lib/tire";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { createContext } from "react";
+
+import { getProducts } from "lib/product";
+import { getSetProducts, getSetProductSearch } from "lib/setProduct";
+import { useSearchParams } from "next/navigation";
 import { useNotificationContext } from "./notificationContext";
 
-const searchContext = createContext({});
+const {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} = require("react");
 
-export const SearchProvider = ({ children }) => {
-  const [car, setCar] = useState(null);
+const searchSetProductContext = createContext();
+
+export const SearchSetProductProvider = ({ children }) => {
   const [querys, setQuerys] = useState(null);
   const [search, setSearch] = useState(null);
-  const [tires, setTires] = useState([]);
+  const [products, setProducts] = useState([]);
   const [paginate, setPaginate] = useState(null);
   const searchParams = useSearchParams();
   const { setContentLoad } = useNotificationContext();
-  const [wheelsize, setWheelsize] = useState(null);
 
   const createQueryString = useCallback(
     (name, value) => {
@@ -45,11 +50,19 @@ export const SearchProvider = ({ children }) => {
       "tiresize",
       "use",
       "season",
-      "setof",
+      "categoryname",
+      "diameter",
+      "width",
+      "boltPattern",
+      "inSet",
+      "offSet",
+      "rim",
+      "threadSize",
+      "centerBore",
       "minprice",
       "maxprice",
+      "setOf",
       "sort",
-      "categoryname",
     ];
 
     searchFields.map((field) => {
@@ -78,10 +91,10 @@ export const SearchProvider = ({ children }) => {
     const fetchDatas = async () => {
       const qrys = buildQuerys();
       setQuerys(qrys);
-      const { search: result } = await getSearch(qrys);
-      const { tires, pagination } = await getTires(qrys);
+      const { search: result } = await getSetProductSearch(qrys);
+      const { setproducts, pagination } = await getSetProducts(qrys);
       setSearch(result);
-      setTires(tires);
+      setProducts(setproducts);
       setPaginate(pagination);
       setContentLoad(false);
     };
@@ -98,11 +111,19 @@ export const SearchProvider = ({ children }) => {
       "tiresize",
       "use",
       "season",
-      "setof",
+      "categoryname",
+      "diameter",
+      "width",
+      "boltPattern",
+      "inSet",
+      "offSet",
+      "rim",
+      "threadSize",
+      "centerBore",
       "minprice",
       "maxprice",
+      "setOf",
       "sort",
-      "categoryname",
     ];
 
     searchFields.map((field) => {
@@ -124,10 +145,9 @@ export const SearchProvider = ({ children }) => {
 
     const fetchData = async (qrys) => {
       setContentLoad(true);
-      const { search: result } = await getSearch(qrys);
-      const { tires, pagination } = await getTires(qrys);
-      setSearch(result);
-      setTires(tires);
+      const { products, pagination } = await getProducts(qrys);
+
+      setProducts(products);
       setPaginate(pagination);
       setContentLoad(false);
     };
@@ -138,72 +158,26 @@ export const SearchProvider = ({ children }) => {
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    let query = "";
-    const fields = ["carmake", "carmodel", "caryear", "caroption"];
-
-    fields.map((field) => {
-      const data = searchParams.get(field);
-      if (field === "carmake") query += `make=${data}&`;
-      if (field === "carmodel") query += `model=${data}&`;
-      if (field === "caryear") query += `year=${data}&`;
-      if (field === "caroption") query += `modification=${data}&`;
-    });
-    query += `user_key=5c53c728656ad6ab73949f3ff71230c8`;
-
-    const fetchData = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/search/by_model/?${query}`
-      );
-
-      if (car) {
-        const carData = result.data.data;
-
-        setCar(carData);
-
-        let wheels = car.wheels;
-        car.map((car) => {
-          wheels = [...car.wheels];
-        });
-
-        if (wheels && wheels.length > 0) {
-          let tiresizes = "";
-
-          wheels.map((wheel) => {
-            tiresizes += wheel.front.tire + ",";
-          });
-          setWheelsize(tiresizes.slice(0, -1));
-        }
-      }
-    };
-
-    if (query || query !== "user_key=5c53c728656ad6ab73949f3ff71230c8") {
-      fetchData();
-    }
-  }, [searchParams]);
-
   return (
-    <searchContext.Provider
+    <searchSetProductContext.Provider
       value={{
-        car,
         querys,
         search,
-        setCar,
         setQuerys,
         setSearch,
-        tires,
         paginate,
+        products,
         removeQuery,
         createQueryString,
         buildQuerys,
-        setTires,
         setPaginate,
-        wheelsize,
+        setProducts,
       }}
     >
       {children}
-    </searchContext.Provider>
+    </searchSetProductContext.Provider>
   );
 };
 
-export const useSearchContext = () => useContext(searchContext);
+export const useSearchSetProductContext = () =>
+  useContext(searchSetProductContext);

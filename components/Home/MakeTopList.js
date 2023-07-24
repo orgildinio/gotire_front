@@ -30,7 +30,10 @@ const MakeTopList = () => {
             <div className="row gy-4">
               {data &&
                 data.map((make) => (
-                  <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
+                  <div
+                    className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6"
+                    key={make._id}
+                  >
                     <Link href={`/tires?make=${make.name.toLowerCase()}`}>
                       <div className="tire-brand">
                         {make.logo ? (

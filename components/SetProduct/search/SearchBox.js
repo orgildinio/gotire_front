@@ -1,18 +1,27 @@
 "use client";
 import { Slider } from "antd";
-import { useSearchWheelContext } from "context/searchWheelContext";
+import { useSearchSetProductContext } from "context/searchSetProductContext";
 import { getCategory } from "lib/categories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const SearchWheelBox = () => {
-  const { search, createQueryString, removeQuery, car } =
-    useSearchWheelContext();
+const SearchBox = () => {
+  const { search, createQueryString, removeQuery } =
+    useSearchSetProductContext();
   const [categories, setCategories] = useState([]);
   const formatter = (value) => `${new Intl.NumberFormat().format(value)}₮`;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  console.log(search);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { categories: cat } = await getCategory("setproduct");
+      setCategories(cat);
+    };
+
+    fetchData().catch((err) => console.log(err));
+  }, []);
 
   const queryBuild = (name, value, isSame = false) => {
     let query = "?";
@@ -78,15 +87,6 @@ const SearchWheelBox = () => {
     else return false;
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { categories } = await getCategory("wheel");
-      setCategories(categories);
-    };
-
-    fetchData().catch((err) => console.log(err));
-  }, []);
-
   return (
     <>
       <div className="product-search-side ">
@@ -105,7 +105,7 @@ const SearchWheelBox = () => {
                         `${category.name.toLowerCase()}`
                       )
                     }
-                    className={`${
+                    className={`categoryname ${
                       activeCheck(
                         "categoryname",
                         `${category.name.toLowerCase()}`
@@ -120,13 +120,109 @@ const SearchWheelBox = () => {
         </div>
         <div className="search-side-item">
           <div className="search-side-title">
-            <p> Диаметр </p>
+            <p> Багц </p>
           </div>
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.diameter &&
-                search.diameter.map((diameter, index) => (
+                search.setOf &&
+                search.setOf.map((set) => (
+                  <button
+                    onClick={() => handleMultSelect("setOf", set.name)}
+                    className={`${
+                      activeCheck("setOf", set.name) === true && "active"
+                    }`}
+                  >
+                    {set.name} ({set.count})
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="search-side-item">
+          <div className="search-side-title">
+            <p> Дугуйны мэдээллээр </p>
+          </div>
+          <div className="search-side-body">
+            <div className="search-list">
+              {search &&
+                search.tire &&
+                search.tire.tiresizeResult.map((size, index) => (
+                  <button
+                    onClick={() =>
+                      handleMultSelect(
+                        "tiresize",
+                        `${size.width}/${size.height}R${size.diameter}`
+                      )
+                    }
+                    className={`${
+                      activeCheck(
+                        "tiresize",
+                        `${size.width}/${size.height}R${size.diameter}`
+                      ) === true && "active"
+                    }`}
+                  >
+                    {size.width}/{size.height}R{size.diameter} ({size.count})
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="search-side-item">
+          <div className="search-side-title">
+            <p> Улирал </p>
+          </div>
+          <div className="search-side-body">
+            <div className="search-list">
+              {search &&
+                search.tire.season &&
+                search.tire.season.map((season) => (
+                  <button
+                    onClick={() => handleMultSelect("season", season.name)}
+                    className={`${
+                      activeCheck("season", season.name) === true && "active"
+                    }`}
+                  >
+                    {(season.name === "winter" && "Өвлийн") ||
+                      (season.name === "summer" && "Зуны") ||
+                      (season.name === "allin" && "Дөрвөн улиралын")}{" "}
+                    ({season.count})
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="search-side-item">
+          <div className="search-side-title">
+            <p> Хувь </p>
+          </div>
+          <div className="search-side-body">
+            <div className="search-list">
+              {search &&
+                search.tire.use &&
+                search.tire.use.map((use) => (
+                  <button
+                    onClick={() => handleMultSelect("use", use.name)}
+                    className={`${
+                      activeCheck("use", use.name) === true && "active"
+                    }`}
+                  >
+                    {parseInt(use.name) === 100 ? "Шинэ" : use.name + "%"} (
+                    {use.count})
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="search-side-item">
+          <div className="search-side-title">
+            <p> Обудын мэдээллээр </p>
+          </div>
+          <div className="search-side-body">
+            <div className="search-list">
+              {search &&
+                search.wheel.diameter &&
+                search.wheel.diameter.map((diameter, index) => (
                   <button
                     onClick={() =>
                       handleMultSelect("diameter", `${diameter.name}`)
@@ -149,8 +245,8 @@ const SearchWheelBox = () => {
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.width &&
-                search.width.map((width, index) => (
+                search.wheel.width &&
+                search.wheel.width.map((width, index) => (
                   <button
                     onClick={() => handleMultSelect("width", `${width.name}`)}
                     className={`${
@@ -170,8 +266,8 @@ const SearchWheelBox = () => {
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.boltPattern &&
-                search.boltPattern.map((boltPattern, index) => (
+                search.wheel.boltPattern &&
+                search.wheel.boltPattern.map((boltPattern, index) => (
                   <button
                     onClick={() =>
                       handleMultSelect("boltPattern", `${boltPattern.name}`)
@@ -189,34 +285,13 @@ const SearchWheelBox = () => {
         </div>
         <div className="search-side-item">
           <div className="search-side-title">
-            <p> RIM </p>
-          </div>
-          <div className="search-side-body">
-            <div className="search-list">
-              {search &&
-                search.rim &&
-                search.rim.map((rim, index) => (
-                  <button
-                    onClick={() => handleMultSelect("rim", `${rim.name}`)}
-                    className={`${
-                      activeCheck("rim", `${rim.name}`) === true && "active"
-                    }`}
-                  >
-                    {rim.name} ({rim.count})
-                  </button>
-                ))}
-            </div>
-          </div>
-        </div>
-        <div className="search-side-item">
-          <div className="search-side-title">
             <p> Болтны хэмжээ </p>
           </div>
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.threadSize &&
-                search.threadSize.map((threadSize, index) => (
+                search.wheel.threadSize &&
+                search.wheel.threadSize.map((threadSize, index) => (
                   <button
                     onClick={() =>
                       handleMultSelect("threadSize", `${threadSize.name}`)
@@ -239,8 +314,8 @@ const SearchWheelBox = () => {
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.centerBore &&
-                search.centerBore.map((centerBore, index) => (
+                search.wheel.centerBore &&
+                search.wheel.centerBore.map((centerBore, index) => (
                   <button
                     onClick={() =>
                       handleMultSelect("centerBore", `${centerBore.name}`)
@@ -258,20 +333,20 @@ const SearchWheelBox = () => {
         </div>
         <div className="search-side-item">
           <div className="search-side-title">
-            <p> Багц </p>
+            <p> RIM </p>
           </div>
           <div className="search-side-body">
             <div className="search-list">
               {search &&
-                search.setOf &&
-                search.setOf.map((setOf, index) => (
+                search.wheel.rim &&
+                search.wheel.rim.map((rim, index) => (
                   <button
-                    onClick={() => handleMultSelect("setOf", `${setOf.name}`)}
+                    onClick={() => handleMultSelect("rim", `${rim.name}`)}
                     className={`${
-                      activeCheck("setOf", `${setOf.name}`) === true && "active"
+                      activeCheck("rim", `${rim.name}`) === true && "active"
                     }`}
                   >
-                    {setOf.name} ({setOf.count})
+                    {rim.name} ({rim.count})
                   </button>
                 ))}
             </div>
@@ -301,4 +376,4 @@ const SearchWheelBox = () => {
   );
 };
 
-export default SearchWheelBox;
+export default SearchBox;

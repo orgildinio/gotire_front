@@ -43,7 +43,13 @@ const SearchHeaderBox = () => {
           }")`,
         }}
       >
-        <div className="container header-container">
+        <div className="container header-text">
+          <h6>
+            Бүх төрлийн автомашины обуд, дугуй болон дагалдах сэлбэгийн
+            төрөлжсөн худалдаа
+          </h6>
+        </div>
+        {/* <div className="container header-container">
           <div className="header-search-box">
             <div className="head-search-tabs">
               <div className={`head-tab-item ${tab == "tire" && "active"}`}>
@@ -62,7 +68,7 @@ const SearchHeaderBox = () => {
               {tab === "wheel" && <WheelSearch />}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

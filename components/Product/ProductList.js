@@ -1,32 +1,31 @@
 "use client";
-
+import { useSearchProductContext } from "context/searchProductContext";
 import base from "lib/base";
 import Link from "next/link";
 import { Select } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { useNotificationContext } from "context/notificationContext";
 import BlockLoad from "components/Generals/BlockLoad";
-import { useEffect } from "react";
-import { useSearchWheelContext } from "context/searchWheelContext";
-import { getWheels } from "lib/wheel";
 
-const WheelList = () => {
+import { getProducts } from "lib/product";
+
+const ProductList = () => {
   const {
-    wheels,
-    paginate,
+    querys,
     createQueryString,
     removeQuery,
-    querys,
+    products,
     buildQuerys,
-    setWheels,
+    setProducts,
     setPaginate,
-  } = useSearchWheelContext();
-
-  const { contentLoad, setContentLoad } = useNotificationContext();
+    paginate,
+  } = useSearchProductContext();
+  const { contentLoad } = useNotificationContext();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const queryBuild = (name, value, isSame = false) => {
     let query = "?";
@@ -39,27 +38,51 @@ const WheelList = () => {
     router.push(pathname + query + params);
   };
 
+  const handleDelete = (name, value) => {
+    let isSame = false;
+    let params = searchParams.get(name);
+    let setParams = [];
+
+    if (params) {
+      setParams = params.split(",");
+    }
+
+    if (setParams.length > 0) {
+      const filter = setParams.filter((el) => el == value);
+      if (filter.length > 0) {
+        filter.map((same) =>
+          setParams.splice(
+            setParams.findIndex((e) => e === same),
+            1
+          )
+        );
+      } else {
+        setParams.push(value);
+      }
+    } else {
+      setParams.push(value);
+    }
+
+    queryBuild(name, setParams, isSame);
+  };
+
   const handleChange = (value) => {
     queryBuild("sort", value);
   };
-
-  const handleDelete = (name, data) => {
-    const params = removeQuery(name, data);
-    router.push(pathname + "?" + params);
-  };
-
   const nextpage = () => {
     const qry = buildQuerys();
+
     const next = async () => {
-      const { wheels, pagination } = await getWheels(
+      const { products, pagination } = await getProducts(
         `${qry}page=${paginate.nextPage}`
       );
-
-      setWheels((bs) => [...bs, ...wheels]);
-      setPaginate(() => ({ ...pagination }));
+      setProducts((bs) => [...bs, ...products]);
+      setPaginate(pagination);
+      // setLoader(false);
     };
 
     if (paginate && paginate.nextPage) {
+      // setLoader(true);
       next().catch((error) => console.log(error));
     }
   };
@@ -68,9 +91,9 @@ const WheelList = () => {
     <div className="product-main">
       <div className="product-main-header">
         <h4>
-          Обуд <span> | нийт {(paginate && paginate.total) || 0} </span>{" "}
+          Бусад сэлбэгүүд
+          <span> | нийт {(paginate && paginate.total) || 0}</span>{" "}
         </h4>
-
         <Select
           defaultValue="new"
           onChange={handleChange}
@@ -95,7 +118,6 @@ const WheelList = () => {
           ]}
         ></Select>
       </div>
-
       <div className="product-filter-list">
         {querys &&
           querys.map((el) => (
@@ -110,42 +132,41 @@ const WheelList = () => {
           ))}
       </div>
       <div className="row gy-4">
-        {wheels &&
-          wheels.map((wheel) => (
+        {products &&
+          products.map((product) => (
             <div className="col-lg-2 col-md-3 col-sm-6 col-6">
-              <Link href={`/wheels/${wheel.slug}`}>
+              <Link href={`/products/${product.slug}`}>
                 <div className="product-item">
                   <div className="product-item-img">
                     <div className="product-item-set">
-                      Ширхэг: {wheel.setOf}
+                      Ширхэг: {product.setOf}
                     </div>
-                    {wheel.pictures && wheel.pictures[0] ? (
+                    {product.pictures && product.pictures[0] ? (
                       <img
-                        src={base.cdnUrl + "/350x350/" + wheel.pictures[0]}
+                        src={base.cdnUrl + "/350x350/" + product.pictures[0]}
                       />
                     ) : (
                       <img src="/images/no-product.jpg" />
                     )}
                   </div>
                   <div className="product-item-dtl">
-                    <h4>{wheel.name}</h4>
-                    <div className="product-item-infos">
-                      <li>Хэмжээ: {wheel.rim}</li>
-                      <li>Болтны зай: {wheel.boltPattern}</li>
-                    </div>
+                    <h4>{product.name}</h4>
+
                     <div className="product-item-price">
-                      {wheel.isDiscount == true && (
+                      {product.isDiscount == true && (
                         <h4 className="p-discount">
-                          {new Intl.NumberFormat().format(wheel.discount)}₮{" "}
+                          {new Intl.NumberFormat().format(product.discount)}₮{" "}
                           <span>
                             {" "}
-                            {new Intl.NumberFormat().format(wheel.price)}₮{" "}
+                            {new Intl.NumberFormat().format(
+                              product.price
+                            )}₮{" "}
                           </span>
                         </h4>
                       )}
-                      {wheel.isDiscount == false && (
+                      {product.isDiscount == false && (
                         <h4 className="p-price">
-                          {new Intl.NumberFormat().format(wheel.price)}₮
+                          {new Intl.NumberFormat().format(product.price)}₮
                         </h4>
                       )}
                     </div>
@@ -167,4 +188,4 @@ const WheelList = () => {
   );
 };
 
-export default WheelList;
+export default ProductList;

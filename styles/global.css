@@ -63,7 +63,6 @@ table {
 }
 
 body {
-  overflow-x: hidden;
   font-weight: normal;
   font-family: "Montserrat", sans-serif;
   background-color: rgb(248, 248, 248);
@@ -77,6 +76,10 @@ img,
 iframe,
 video {
   max-width: 100%;
+}
+
+.pd-4 {
+  padding: 30px 0px;
 }
 
 .loader-box {
@@ -115,7 +118,8 @@ video {
 }
 
 .custom-container {
-  padding: 0px 70px;
+  padding: 0px 40px;
+  width: 100%;
 }
 
 @-webkit-keyframes load8 {
@@ -156,27 +160,47 @@ video {
   background: #3e3e9f;
 }
 
+.top-menu {
+  background: #25256b;
+  padding: 5px 0px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 10px 0px;
 }
 
 .header-logo img {
-  width: 180px;
+  width: 110px;
 }
 
 .header-left {
+  flex: 1 1;
   display: flex;
   flex-direction: row;
   gap: 50px;
   align-items: center;
 }
 
+.search-box {
+  width: 100%;
+}
+
+.search-box input {
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  padding-left: 15px;
+  font-size: 12px;
+  height: 30px;
+}
+
 .headerMenu {
   display: flex;
   flex-direction: row;
   gap: 25px;
+  margin-bottom: 0px;
 }
 
 .headerMenu a.header-link {
@@ -186,7 +210,7 @@ video {
   font-style: italic;
   text-transform: uppercase;
   transition: all 0.5s;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
 }
 
@@ -216,6 +240,7 @@ video {
   color: #fff;
   font-weight: 600;
   font-style: italic;
+    text-decoration: none;
 }
 
 .header-register-btn {
@@ -225,6 +250,7 @@ video {
   transform: skewX(-10deg);
   font-weight: 600;
   border-left: 6px solid #ffff00;
+  text-decoration: none;
 }
 
 .header-cart {
@@ -255,7 +281,7 @@ video {
 }
 
 .headerSticky .header-logo img {
-  width: 130px;
+  width: 110px;
 }
 
 .dropdownMenu {
@@ -354,7 +380,7 @@ video {
 .header-search {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 250px;
   background: rgb(2, 0, 36);
   background: linear-gradient(
     0deg,
@@ -378,6 +404,23 @@ video {
   transform: skewX(-20deg);
   border-radius: 10px;
   font-family: "Montserrat", sans-serif !important;
+}
+
+.header-text {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+
+.header-text h6 {
+  color: rgb(255, 255, 255);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+  margin-bottom: 0px;
+  width: 50%;
+  text-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px;
 }
 
 .head-search-tabs {
@@ -595,6 +638,37 @@ video {
 }
 
 /* ---------------------------------
+----------- Home category ----------------
+--------------------------------- */
+
+.category-list {
+}
+
+.category-list button {
+  flex: 0 0 18%;
+  width: 100%;
+  border: 1px solid #ccd3dc;
+  border-radius: 10px;
+  padding: 16px;
+  position: relative;
+}
+
+.single-category h4 {
+  color: #0c132b;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.single-category-img {
+  margin-bottom: 15px;
+}
+
+.single-category-img img {
+  width: 150px;
+}
+
+/* ---------------------------------
 ----------- Home most tires ----------------
 --------------------------------- */
 
@@ -691,6 +765,7 @@ footer {
   color: rgb(137, 141, 146);
   font-size: 13px;
   margin-bottom: 10px;
+  padding-left: 0px;
 }
 
 .footer-links li {
@@ -701,6 +776,7 @@ footer {
   color: rgb(137, 141, 146);
   font-size: 12px;
   transition: all 0.6s;
+  text-decoration: none;
 }
 
 .footer-links li a:hover {
@@ -1023,6 +1099,8 @@ footer {
   font-weight: 600;
   margin-bottom: 15px;
   transition: all 0.3s;
+  text-decoration: none;
+  color:#000;
 }
 
 .service-col-content .col-service-title:hover {
@@ -1089,6 +1167,15 @@ footer {
   overflow: hidden auto;
 }
 
+.list-full{
+    display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 320px;
+      overflow: hidden auto;
+}
+
 .search-check-list {
   max-height: 320px;
   overflow: hidden auto;
@@ -1113,6 +1200,10 @@ footer {
   background-color: #fff;
   font-weight: 500;
   transition: border-color 0.5s;
+}
+
+.search-list button.categoryname{
+  flex: 0 0 100%;
 }
 
 .search-list button:hover {
@@ -1249,6 +1340,10 @@ footer {
   margin: 20px 0px;
 }
 
+.product-side{
+  z-index: 1;
+}
+
 /* .product-side{
   padding: 20px;
   background:#fff;
@@ -1355,6 +1450,7 @@ footer {
   font-size: 12px;
   font-weight: 600;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 button.cart-btn {
@@ -1377,21 +1473,19 @@ button.shop-btn:hover {
   background: #35358a;
 }
 
-.product-more{
+.product-more {
   margin-top: 30px;
 }
-.product-more h5{
+.product-more h5 {
   font-size: 16px;
 }
-
-
 
 /* Mobile search button tire */
 
 .mobile-search-box {
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 16px;
-  padding: 10px 0px;
+  padding: 13px 0px;
 }
 .mobile-search-buttons {
   display: flex;
@@ -1403,8 +1497,8 @@ button.shop-btn:hover {
 .mobile-search-buttons button {
   flex: 1 1 100%;
   border: 1px solid #ccc;
-  padding: 5px 0px;
-  font-size: 14px;
+  padding: 8px 0px;
+  font-size: 13px;
   border-radius: 3px;
   background-color: #fff;
   font-weight: 500;
@@ -1414,7 +1508,6 @@ button.shop-btn:hover {
   width: 10px;
   margin-left: 3px;
 }
-
 
 /* ---------------------------------
 ----------- Contact CSS ----------------
@@ -1511,7 +1604,7 @@ button.shop-btn:hover {
 
 .form__contact {
   position: relative;
-  z-index: -1;
+  z-index: 1;
   margin-bottom: 50px;
 }
 
@@ -1626,6 +1719,7 @@ button.shop-btn:hover {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding-left: 0px;
 }
 
 .user-menu li a {
@@ -1635,6 +1729,7 @@ button.shop-btn:hover {
   font-size: 14px;
   align-items: center;
   color: rgb(94, 92, 92);
+  text-decoration: none;
 }
 
 .user-menu li a i,
@@ -1906,7 +2001,7 @@ button.shop-btn:hover {
 ----------- Wheels CSS ----------------
 --------------------------------- */
 
-.main-wheels{
+.main-wheels {
   margin-top: 30px;
 }
 
@@ -1924,6 +2019,7 @@ button.shop-btn:hover {
 
 .bread a {
   color: #ccc;
+  text-decoration: none;
 }
 
 .container-bread {
@@ -1958,6 +2054,71 @@ button.shop-btn:hover {
 
 .container-bread li {
   list-style: none;
+}
+
+/* ---------------------------------
+----------- Search side ----------------
+--------------------------------- */
+
+.black-bg {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.486);
+  z-index: 100000;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+}
+
+.side-search-box {
+  position: fixed;
+  z-index: 100001;
+  top: 0px;
+  right: 0px;
+  background: rgba(255, 255, 255);
+  width: 30%;
+  height: 100vh;
+  box-shadow: -6px 0 16px -8px rgba(0, 0, 0, 0.08),
+    -9px 0 28px 0 rgba(0, 0, 0, 0.05), -12px 0 48px 16px rgba(0, 0, 0, 0.03);
+  overflow-y: auto;
+}
+
+.side-search-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  align-items: center;
+  border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+.side-main {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 14px;
+  padding: 30px;
+}
+
+.link-side-category {
+  margin-bottom: 10px;
+  background: none;
+  border: none;
+  background-color: #f1f1f3;
+  padding: 5px 15px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.side-child {
+  display: flex;
+  flex-direction: row;
+  margin-left: 15px;
+}
+
+.side-search-header button {
+  border: none;
+  background: none;
 }
 
 /* ---------------------------------
@@ -2046,10 +2207,23 @@ button.shop-btn:hover {
     padding: 0px 20px;
     padding-top: 15px;
   }
+  .header-text h6 {
+    width: 80%;
+  }
+
+  .side-search-box {
+    width: 60%;
+  }
 
   .product-search-side,
-  .combobox-search {
+  .combobox-search,
+  .topBtn,
+  .container-bread, .top-menu, .product-main-header div {
     display: none;
+  }
+
+  section {
+    padding: 30px 0px;
   }
 
   .mobile-search-box {
@@ -2140,7 +2314,7 @@ button.shop-btn:hover {
   }
 
   .mobile-footer-item img {
-    width: 32px;
+    width: 22px;
     margin-bottom: 5px;
   }
 
@@ -2239,11 +2413,25 @@ button.shop-btn:hover {
     top: 0px;
     margin-top: 30px;
   }
+     .pd-4 {
+       padding: 15px 0px;
+      padding-bottom: 70px;
+     }
 }
 
 @media (max-width: 767px) {
   .search-inputs {
     margin-bottom: 10px;
+  }
+
+  .side-search-box {
+    width: 90%;
+  }
+
+  .header-text h6 {
+    width: 95%;
+    font-size: 22px;
+    line-height: 28px;
   }
 }
 
@@ -2252,7 +2440,14 @@ button.shop-btn:hover {
     width: 95%;
   }
   .mobile-footer-item img {
-    width: 26px;
+    width: 22px;
     margin-bottom: 5px;
   }
+  .custom-container{
+    padding:0px 10px;
+  }
+    .pd-4{
+      padding:10px 0px;
+        padding-bottom: 70px;
+    }
 }

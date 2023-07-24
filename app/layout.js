@@ -16,6 +16,11 @@ import Header from "components/Generals/Header";
 import MobileFooter from "components/Generals/MobileFooter";
 import { SearchProvider } from "context/searchContext";
 import { SearchWheelProvider } from "context/searchWheelContext";
+import { SideSearchProvider } from "context/sideSearchContext";
+import { SearchSetProductProvider } from "context/searchSetProductContext";
+import { SearchProductProvider } from "context/searchProductContext";
+import { Suspense } from "react";
+import Loader from "components/Generals/Loader";
 
 export const metadata = {
   title: `Gotire.mn - автомашины дугуй, обудын худалдаа`,
@@ -26,37 +31,45 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <NotificationProvider>
-          <AuthProvider>
-            <SearchWheelProvider>
-              <SearchProvider>
-                <PayProvider>
-                  <CartProvider>
-                    <MenuProvider>
-                      <WebInfoProvider>
-                        <Header />
-                        {children}
-                        <MobileFooter />
-                        <Footer />
-                        <ToastContainer
-                          position="top-right"
-                          autoClose={5000}
-                          hideProgressBar={false}
-                          newestOnTop={false}
-                          closeOnClick
-                          rtl={false}
-                          pauseOnFocusLoss
-                          draggable
-                          pauseOnHover
-                        />
-                      </WebInfoProvider>
-                    </MenuProvider>
-                  </CartProvider>
-                </PayProvider>
-              </SearchProvider>
-            </SearchWheelProvider>
-          </AuthProvider>
-        </NotificationProvider>
+        <Suspense fallback={<Loader />}>
+          <NotificationProvider>
+            <AuthProvider>
+              <SearchProductProvider>
+                <SearchSetProductProvider>
+                  <SideSearchProvider>
+                    <SearchWheelProvider>
+                      <SearchProvider>
+                        <PayProvider>
+                          <CartProvider>
+                            <MenuProvider>
+                              <WebInfoProvider>
+                                <Header />
+                                {children}
+                                <MobileFooter />
+                                <Footer />
+                                <ToastContainer
+                                  position="top-right"
+                                  autoClose={5000}
+                                  hideProgressBar={false}
+                                  newestOnTop={false}
+                                  closeOnClick
+                                  rtl={false}
+                                  pauseOnFocusLoss
+                                  draggable
+                                  pauseOnHover
+                                />
+                              </WebInfoProvider>
+                            </MenuProvider>
+                          </CartProvider>
+                        </PayProvider>
+                      </SearchProvider>
+                    </SearchWheelProvider>
+                  </SideSearchProvider>
+                </SearchSetProductProvider>
+              </SearchProductProvider>
+            </AuthProvider>
+          </NotificationProvider>
+        </Suspense>
       </body>
     </html>
   );

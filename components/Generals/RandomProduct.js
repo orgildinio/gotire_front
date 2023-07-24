@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { getRandomProducts } from "lib/product";
+import { getRandomProducts } from "lib/setProduct";
 import base from "lib/base";
 import { useEffect, useState } from "react";
 

@@ -31,12 +31,12 @@ const Header = () => {
       let productSide = document.querySelector(".product-side");
       if (header) {
         let sticky = header.offsetHeight;
-        if (headerSearch) {
-          sticky = headerSearch.offsetHeight;
-        }
-        if (pageDetailsHeader) {
-          sticky = pageDetailsHeader.offsetHeight;
-        }
+        // if (headerSearch) {
+        //   sticky = headerSearch.offsetHeight;
+        // }
+        // if (pageDetailsHeader) {
+        //   sticky = pageDetailsHeader.offsetHeight;
+        // }
         if (window.pageYOffset > sticky) {
           header.classList.add(`headerSticky`);
           if (pageSide) {
@@ -64,9 +64,8 @@ const Header = () => {
 
   return (
     <>
-      <div className="top-line"></div>
       <div className="top-header">
-        <div className="container">
+        <div className="custom-container">
           <div className="header">
             <div className="header-left">
               <div className="header-logo">
@@ -79,7 +78,6 @@ const Header = () => {
                   </a>
                 )}
               </div>
-              <ul className="headerMenu">{menus}</ul>
             </div>
             <div className="header-right">
               <div className="auth-btns">
@@ -107,6 +105,11 @@ const Header = () => {
               <MobileMenu />
             </div>
           </div>
+        </div>
+      </div>
+      <div className="top-menu">
+        <div className="custom-container">
+          <ul className="headerMenu">{menus}</ul>
         </div>
       </div>
     </>

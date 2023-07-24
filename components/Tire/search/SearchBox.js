@@ -1,15 +1,26 @@
 "use client";
 import { Slider } from "antd";
 import { useSearchContext } from "context/searchContext";
+import { getCategory } from "lib/categories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const SearchBox = () => {
   const { search, createQueryString, removeQuery, car } = useSearchContext();
-
+  const [categories, setCategories] = useState([]);
   const formatter = (value) => `${new Intl.NumberFormat().format(value)}₮`;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { categories } = await getCategory("tire");
+      setCategories(categories);
+    };
+
+    fetchData().catch((err) => console.log(err));
+  }, []);
 
   const queryBuild = (name, value, isSame = false) => {
     let query = "?";
@@ -103,6 +114,35 @@ const SearchBox = () => {
         )}
         <div className="search-side-item">
           <div className="search-side-title">
+            <p> Ангилал </p>
+          </div>
+          <div className="search-side-body">
+            <div className="search-list list-full">
+              {categories &&
+                categories.map((category, index) => (
+                  <button
+                    onClick={() =>
+                      handleMultSelect(
+                        "categoryname",
+                        `${category.name.toLowerCase()}`
+                      )
+                    }
+                    className={`categoryname ${
+                      activeCheck(
+                        "categoryname",
+                        `${category.name.toLowerCase()}`
+                      ) === true && "active"
+                    }`}
+                  >
+                    {category.name} ({category.count})
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="search-side-item">
+          <div className="search-side-title">
             <p> Хэмжээ </p>
           </div>
           <div className="search-side-body">
@@ -124,7 +164,7 @@ const SearchBox = () => {
                       ) === true && "active"
                     }`}
                   >
-                    {size.width}/{size.height}R{size.diameter}
+                    {size.width}/{size.height}R{size.diameter} ({size.count})
                   </button>
                 ))}
             </div>
@@ -145,7 +185,8 @@ const SearchBox = () => {
                       activeCheck("use", use.name) === true && "active"
                     }`}
                   >
-                    {parseInt(use.name) === 100 ? "Шинэ" : use.name + "%"}
+                    {parseInt(use.name) === 100 ? "Шинэ" : use.name + "%"} (
+                    {use.count})
                   </button>
                 ))}
             </div>
@@ -168,7 +209,8 @@ const SearchBox = () => {
                   >
                     {(season.name === "winter" && "Өвлийн") ||
                       (season.name === "summer" && "Зуны") ||
-                      (season.name === "allin" && "Дөрвөн улиралын")}
+                      (season.name === "allin" && "Дөрвөн улиралын")}{" "}
+                    ({season.count})
                   </button>
                 ))}
             </div>
@@ -189,7 +231,7 @@ const SearchBox = () => {
                       activeCheck("setof", set.name) === true && "active"
                     }`}
                   >
-                    {set.name}
+                    {set.name} ({set.count})
                   </button>
                 ))}
             </div>

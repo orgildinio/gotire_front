@@ -27,7 +27,10 @@ const ReachTires = () => {
             <div className="row gy-4">
               {data &&
                 data.map((el) => (
-                  <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+                  <div
+                    className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6"
+                    key={el._id}
+                  >
                     <Link
                       href={`/tires?tiresize=${el.width}/${el.height}R${el.diameter}`}
                     >
