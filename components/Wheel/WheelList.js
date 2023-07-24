@@ -22,6 +22,7 @@ const WheelList = () => {
     buildQuerys,
     setWheels,
     setPaginate,
+    rimData
   } = useSearchWheelContext();
 
   const { contentLoad, setContentLoad } = useNotificationContext();
@@ -39,6 +40,14 @@ const WheelList = () => {
     router.push(pathname + query + params);
   };
 
+
+  useEffect(() => {
+    if (rimData) {
+      const params = createQueryString("rim", rimData);
+      router.push(pathname + "?" + params);
+    }
+  }, [rimData]); 
+  
   const handleChange = (value) => {
     queryBuild("sort", value);
   };

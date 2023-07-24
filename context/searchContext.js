@@ -155,16 +155,16 @@ export const SearchProvider = ({ children }) => {
       const result = await axios.get(
         `https://api.wheel-size.com/v2/search/by_model/?${query}`
       );
-
-      if (car) {
+        console.log(result)
+      if (result) {
         const carData = result.data.data;
 
-        setCar(carData);
+        setCar(carData[0]);
 
-        let wheels = car.wheels;
-        car.map((car) => {
-          wheels = [...car.wheels];
-        });
+        let wheels = carData[0].wheels;
+        // carData[0].map((car) => {
+        //   wheels = [...car.wheels];
+        // });
 
         if (wheels && wheels.length > 0) {
           let tiresizes = "";
@@ -178,7 +178,7 @@ export const SearchProvider = ({ children }) => {
     };
 
     if (query || query !== "user_key=5c53c728656ad6ab73949f3ff71230c8") {
-      fetchData();
+      fetchData().catch(err => console.log(err));
     }
   }, [searchParams]);
 
