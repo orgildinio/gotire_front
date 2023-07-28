@@ -2569,7 +2569,7 @@ margin-bottom: 30px;
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 1090;
+  z-index: 10000000;
 }
 
 .pay-modal-centered:before {
@@ -3182,6 +3182,18 @@ margin-bottom: 30px;
       padding: 20px;
       gap: 20px;
     }
+
+    .modal-content .qpay, .modal-content .banks{
+      display: flex;
+      flex: 1 1 100%;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+             .modal-content .qpay img {
+              width: 80%;
+             }
 }
 
 @media (max-width: 767px) {
@@ -3239,7 +3251,7 @@ margin-bottom: 30px;
       width: 100%;
     }
 section{
-      padding-bottom: 70px;
+      padding-bottom: 90px;
 }
   .pd-4 {
     padding: 10px 0px;
