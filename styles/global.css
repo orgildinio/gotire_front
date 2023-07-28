@@ -2547,6 +2547,7 @@ margin-bottom: 30px;
   padding: 0 0 24px;
   pointer-events: none;
   position: relative;
+  overflow: auto;
   width: 680px;
   z-index: 1000000000000;
 }
