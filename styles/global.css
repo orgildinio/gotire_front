@@ -3189,6 +3189,8 @@ margin-bottom: 30px;
       width: 100%;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 10px;
     }
 
              .modal-content .qpay img {
