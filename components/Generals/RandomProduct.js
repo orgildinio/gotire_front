@@ -27,7 +27,7 @@ const RandomProduct = () => {
                 key={`product_${index}`}
               >
                 <div className="productItem">
-                  <Link href={`/product/${product._id}`}>
+                  <Link href={`/wheels/${product._id}`}>
                     <div className="productImage">
                       <img
                         src={`${base.cdnUrl}/350x350/${product.pictures[0]}`}
