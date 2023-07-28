@@ -69,7 +69,6 @@ const PayModule = (props) => {
         className={`modal-root  ${
           visible === false ? "displayNone" : "displayOn"
         }`}
-        onClick={() => setVisible(false)}
       >
         <div className="pay-modal-mask" onClick={() => setVisible(false)}></div>
         <div className="pay-modal-wrap pay-modal-centered">
