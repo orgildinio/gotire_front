@@ -245,50 +245,49 @@ export const SearchWheelProvider = ({ children }) => {
     fetchDatas().catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    let query = "";
-    const fields = ["carmake", "carmodel", "caryear", "caroption"];
+  // useEffect(() => {
+  //   let query = "";
+  //   const fields = ["carmake", "carmodel", "caryear", "caroption"];
 
-    fields.map((field) => {
-      const data = searchParams.get(field);
-      if (field === "carmake") query += `make=${data}&`;
-      if (field === "carmodel") query += `model=${data}&`;
-      if (field === "caryear") query += `year=${data}&`;
-      if (field === "caroption") query += `modification=${data}&`;
-    });
-    query += `user_key=5c53c728656ad6ab73949f3ff71230c8`;
+  //   fields.map((field) => {
+  //     const data = searchParams.get(field);
+  //     if (field === "carmake") query += `make=${data}&`;
+  //     if (field === "carmodel") query += `model=${data}&`;
+  //     if (field === "caryear") query += `year=${data}&`;
+  //     if (field === "caroption") query += `modification=${data}&`;
+  //   });
+  //   query += `user_key=5c53c728656ad6ab73949f3ff71230c8`;
 
-    const fetchData = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/search/by_model/?${query}`
-      );
-        console.log(result)
-      if (result) {
-        const carData = result.data.data;
+  //   const fetchData = async () => {
+  //     const result = await axios.get(
+  //       `https://api.wheel-size.com/v2/search/by_model/?${query}`
+  //     );
+  //       console.log(result)
+  //     if (result) {
+  //       const carData = result.data.data;
 
-        setCar(carData[0]);
+  //       setCar(carData[0]);
 
-        let rims = carData[0].wheels;
-        // carData[0].map((car) => {
-        //   wheels = [...car.wheels];
-        // });
+  //       let rims = carData[0].wheels;
+  //       // carData[0].map((car) => {
+  //       //   wheels = [...car.wheels];
+  //       // });
 
-        if (rims && rims.length > 0) {
-          let rimsize = "";
+  //       if (rims && rims.length > 0) {
+  //         let rimsize = "";
 
-          rims.map((rim) => {
-            rimsize += rim.front.rim + ",";
-          });
-          setRimData(rimsize.slice(0, -1))
-        }
-      }
-    };
+  //         rims.map((rim) => {
+  //           rimsize += rim.front.rim + ",";
+  //         });
+  //         setRimData(rimsize.slice(0, -1))
+  //       }
+  //     }
+  //   };
 
-    if (query || query !== "user_key=5c53c728656ad6ab73949f3ff71230c8") {
-      fetchData().catch(err => console.log(err));
-    }
-  }, [searchParams]);
-
+  //   if (query || query !== "user_key=5c53c728656ad6ab73949f3ff71230c8") {
+  //     fetchData().catch(err => console.log(err));
+  //   }
+  // }, [searchParams]);
 
   useEffect(() => {
     let query = "";

@@ -145,9 +145,10 @@ export const SearchSetProductProvider = ({ children }) => {
 
     const fetchData = async (qrys) => {
       setContentLoad(true);
-      const { products, pagination } = await getProducts(qrys);
-
-      setProducts(products);
+      const { search: result } = await getSetProductSearch(qrys);
+      const { setproducts, pagination } = await getSetProducts(qrys);
+      setSearch(result);
+      setProducts(setproducts);
       setPaginate(pagination);
       setContentLoad(false);
     };

@@ -27,96 +27,96 @@ const CarField = ({ searchPath }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchOptions = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/modifications/?make=${make}&model=${model}&year=${year}&user_key=5c53c728656ad6ab73949f3ff71230c8`
-      );
-      if (result && result.data) {
-        const { data } = result.data;
-        setOptions(() =>
-          data.map((el) => ({
-            value: el.slug,
-            label: el.name,
-          }))
-        );
-      }
-    };
-    if (make && model && year) {
-      setOption();
-      fetchOptions().catch((err) => console.log(err));
-    }
-  }, [make, model, year]);
+  // useEffect(() => {
+  //   const fetchOptions = async () => {
+  //     const result = await axios.get(
+  //       `https://api.wheel-size.com/v2/modifications/?make=${make}&model=${model}&year=${year}&user_key=5c53c728656ad6ab73949f3ff71230c8`
+  //     );
+  //     if (result && result.data) {
+  //       const { data } = result.data;
+  //       setOptions(() =>
+  //         data.map((el) => ({
+  //           value: el.slug,
+  //           label: el.name,
+  //         }))
+  //       );
+  //     }
+  //   };
+  //   if (make && model && year) {
+  //     setOption();
+  //     fetchOptions().catch((err) => console.log(err));
+  //   }
+  // }, [make, model, year]);
 
-  useEffect(() => {
-    const fetchYears = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/years/?make=${make}&model=${model}&user_key=5c53c728656ad6ab73949f3ff71230c8`
-      );
-      if (result && result.data) {
-        const { data } = result.data;
-        setYears(() =>
-          data.map((el) => ({
-            value: el.slug,
-            label: el.name,
-          }))
-        );
-      }
-    };
-    if (make && model) {
-      setYear();
-      setOption();
-      fetchYears().catch((err) => console.log(err));
-    }
-  }, [make, model]);
+  // useEffect(() => {
+  //   const fetchYears = async () => {
+  //     const result = await axios.get(
+  //       `https://api.wheel-size.com/v2/years/?make=${make}&model=${model}&user_key=5c53c728656ad6ab73949f3ff71230c8`
+  //     );
+  //     if (result && result.data) {
+  //       const { data } = result.data;
+  //       setYears(() =>
+  //         data.map((el) => ({
+  //           value: el.slug,
+  //           label: el.name,
+  //         }))
+  //       );
+  //     }
+  //   };
+  //   if (make && model) {
+  //     setYear();
+  //     setOption();
+  //     fetchYears().catch((err) => console.log(err));
+  //   }
+  // }, [make, model]);
 
-  useEffect(() => {
-    const fetchModels = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/models/?make=${make}&user_key=5c53c728656ad6ab73949f3ff71230c8`
-      );
-      if (result && result.data) {
-        const { data } = result.data;
-        setModels(() =>
-          data.map((el) => ({
-            value: el.slug,
-            label: el.name,
-          }))
-        );
-      }
-    };
-    if (make) {
-      setModel();
-      setYear();
-      setOption();
-      fetchModels().catch((err) => console.log(err));
-    }
-  }, [make]);
+  // useEffect(() => {
+  //   const fetchModels = async () => {
+  //     const result = await axios.get(
+  //       `https://api.wheel-size.com/v2/models/?make=${make}&user_key=5c53c728656ad6ab73949f3ff71230c8`
+  //     );
+  //     if (result && result.data) {
+  //       const { data } = result.data;
+  //       setModels(() =>
+  //         data.map((el) => ({
+  //           value: el.slug,
+  //           label: el.name,
+  //         }))
+  //       );
+  //     }
+  //   };
+  //   if (make) {
+  //     setModel();
+  //     setYear();
+  //     setOption();
+  //     fetchModels().catch((err) => console.log(err));
+  //   }
+  // }, [make]);
 
-  useEffect(() => {
-    const fetchMakes = async () => {
-      const result = await axios.get(
-        `https://api.wheel-size.com/v2/makes/?user_key=5c53c728656ad6ab73949f3ff71230c8`
-      );
-      if (result && result.data) {
-        const { data } = result.data;
-        setMakes(() =>
-          data.map((el) => ({
-            value: el.slug,
-            label: (
-              <>
-                <img src={el.logo} className="search-make-img" /> {el.name}
-              </>
-            ),
-          }))
-        );
-      }
-    };
-    setYear();
-    setModel();
-    setOption();
-    fetchMakes().catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   const fetchMakes = async () => {
+  //     const result = await axios.get(
+  //       `https://api.wheel-size.com/v2/makes/?user_key=5c53c728656ad6ab73949f3ff71230c8`
+  //     );
+  //     if (result && result.data) {
+  //       const { data } = result.data;
+  //       setMakes(() =>
+  //         data.map((el) => ({
+  //           value: el.slug,
+  //           label: (
+  //             <>
+  //               <img src={el.logo} className="search-make-img" /> {el.name}
+  //             </>
+  //           ),
+  //         }))
+  //       );
+  //     }
+  //   };
+  //   setYear();
+  //   setModel();
+  //   setOption();
+  //   fetchMakes().catch((err) => console.log(err));
+  // }, []);
 
   return (
     <>

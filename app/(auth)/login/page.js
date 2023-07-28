@@ -20,7 +20,6 @@ import { redirect } from "next/navigation";
 import { useNotificationContext } from "context/notificationContext";
 
 export default function Page() {
-  const [cookies] = useCookies(["gotiretoken"]);
   const { loginUser, user } = useAuthContext();
   const { contentLoad } = useNotificationContext();
 

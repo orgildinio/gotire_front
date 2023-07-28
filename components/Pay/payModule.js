@@ -2,57 +2,59 @@
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios-base";
-import { useBookingContext } from "context/bookingContext";
+
 import { getBanks } from "lib/payment";
 import { toastControl } from "lib/toastControl";
-import { redirect } from "next/navigation";
+
 import { useEffect } from "react";
 import { useState } from "react";
-import { useAuthContext } from "context/authContext";
+
 import { usePayContext } from "context/payContext";
 import { useNotificationContext } from "context/notificationContext";
+import { useRouter } from "next/navigation";
 
 const PayModule = (props) => {
   const { visible, setVisible, checkPayment, isPaid, invoice } =
     usePayContext();
-  const { contentLoad } = useNotificationContext();
+
+  const { contentLoad, setContentLoad } = useNotificationContext();
   const [banks, setBanks] = useState([]);
   const [acitveTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(contentLoad);
-
+  const router = useRouter();
   useEffect(() => {
     setLoading(contentLoad);
   }, [contentLoad]);
 
   useEffect(() => {
     const fetchData = async () => {
+      setContentLoad(true);
       const { banks } = await getBanks();
       setBanks(banks);
     };
     fetchData().catch((error) => console.log(error));
+    setContentLoad(false);
   }, []);
 
-  useEffect(() => {
-    if (!invoice) {
-      if (visible === true) {
-        setTimeout(() => {
-          paymentCheck();
-        }, 1000 * 18);
-      }
-    }
-  }, [visible]);
-
-  const paymentCheck = () => {
+  const paymentCheck = async () => {
     setLoading(true);
-    if (props.invoice) {
-      checkPayment(props.invoice.sender_invoice_no);
-    }
-    if (invoice) {
-      checkPayment(invoice.sender_invoice_no);
+    const result = await checkPayment(invoice.sender_invoice_no);
+    if (result === true) {
+      router.push("/userprofile/orders");
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (invoice) {
+      setTimeout(async () => {
+        const result = await checkPayment(invoice.sender_invoice_no);
+        if (result == true) {
+          router.push("/userprofile/orders");
+        }
+      }, 1000 * 15);
+    }
+  }, [invoice]);
 
   useEffect(() => {
     if (isPaid == true) {
@@ -100,9 +102,9 @@ const PayModule = (props) => {
                   <div className="modal-content">
                     <div className="qpay">
                       <h5>QR код уншуулах</h5>
-                      {props.qpay && (
+                      {invoice && (
                         <img
-                          src={`data:image/png;base64,${props.qpay.qr_image}`}
+                          src={`data:image/png;base64,${invoice.qr_image}`}
                         />
                       )}
                       <button
@@ -173,14 +175,20 @@ const PayModule = (props) => {
                           </div>
                         </div>
                         <div className="item">
-                          <div className="sub"> Захиалгын дүн</div>
+                          <div className="sub"> Төлөх дүн</div>
                           <div className="typography">
-                            <span>{props.invoice && props.invoice.amount}</span>
+                            <span>
+                              {props.invoice &&
+                                new Intl.NumberFormat().format(
+                                  props.invoice.total
+                                )}
+                              ₮
+                            </span>
                             <button
                               onClick={() => {
                                 toastControl("success", "Хуулагдлаа");
                                 navigator.clipboard.writeText(
-                                  props.invoice && props.invoice.amount
+                                  props.invoice && props.invoice.total
                                 );
                               }}
                             >
@@ -192,14 +200,13 @@ const PayModule = (props) => {
                           <div className="sub"> Гүйлгээний утга</div>
                           <div className="typography">
                             <span>
-                              {props.invoice && props.invoice.sender_invoice_no}
+                              {props.invoice && props.invoice.orderNumber}
                             </span>
                             <button
                               onClick={() => {
                                 toastControl("success", "Хуулагдлаа");
                                 navigator.clipboard.writeText(
-                                  props.invoice &&
-                                    props.invoice.sender_invoice_no
+                                  props.invoice && props.invoice.orderNumber
                                 );
                               }}
                             >
@@ -220,28 +227,6 @@ const PayModule = (props) => {
                 </div>
               </div>
             </div>
-            {/* <div className="payModal-content">
-              <div className="payModelHeader">
-                <div className="payChoise" onClick={() => setVisible("bank")}>
-                  Банкаар шилжүүлэх
-                </div>
-                <div className="payChoise" onClick={() => setVisible("qpay")}>
-                  Qpay - ээр төлөх
-                </div>
-                <div className="payment-box">
-                  <ul className="bankAccounts">
-                    {banks &&
-                      banks.map((bank) => (
-                        <div className="bank-item">
-                          <div className="bankName"> {bank.bankName}</div>
-                          <div className="bankAccount"> {bank.bankAccount}</div>
-                          <div className="accountName"> {bank.accountName}</div>
-                        </div>
-                      ))}
-                  </ul>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

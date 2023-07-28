@@ -7,7 +7,6 @@ import { useCookies } from "react-cookie";
 
 export default function RootLayout({ children }) {
   const { user } = useAuthContext();
-  const [cookies] = useCookies(["gotiretoken"]);
 
   useEffect(() => {
     if (user) {

@@ -39,8 +39,8 @@ export default function RootLayout({ children }) {
                   <SideSearchProvider>
                     <SearchWheelProvider>
                       <SearchProvider>
-                        <PayProvider>
-                          <CartProvider>
+                        <CartProvider>
+                          <PayProvider>
                             <MenuProvider>
                               <WebInfoProvider>
                                 <Header />
@@ -60,8 +60,8 @@ export default function RootLayout({ children }) {
                                 />
                               </WebInfoProvider>
                             </MenuProvider>
-                          </CartProvider>
-                        </PayProvider>
+                          </PayProvider>
+                        </CartProvider>
                       </SearchProvider>
                     </SearchWheelProvider>
                   </SideSearchProvider>

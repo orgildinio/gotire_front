@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "components/Generals/Loader";
 import NotFound from "components/Generals/Notfound";
 import RandomTire from "components/Product/RandomTire";
+import { useCartContext } from "context/cartContext";
 import base from "lib/base";
 import { getTire } from "lib/tire";
 import Link from "next/link";
@@ -16,6 +17,7 @@ export default function Page({ params: { slug } }) {
   const [image, setImage] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { cartAdd } = useCartContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,6 +43,49 @@ export default function Page({ params: { slug } }) {
       setImage(img);
     }
   }, [tire]);
+
+  const handleCart = () => {
+    if (tire) {
+      const cartData = {
+        productInfo: tire._id,
+        code: tire.tireCode,
+        type: "tire",
+        name: tire.name,
+        qty: tire.setOf,
+        total: tire.setOf,
+        isDiscount: tire.isDiscount,
+        price: tire.price,
+        discount: tire.discount,
+        picture:
+          tire.pictures && tire.pictures[0]
+            ? base.cdnUrl + "/150x150/" + tire.pictures[0]
+            : "/images/no-product.jpg",
+      };
+      cartAdd(cartData);
+    }
+  };
+
+  const handleShop = () => {
+    if (tire) {
+      const cartData = {
+        productInfo: tire._id,
+        code: tire.tireCode,
+        type: "tire",
+        name: tire.name,
+        qty: tire.setOf,
+        total: tire.setOf,
+        isDiscount: tire.isDiscount,
+        price: tire.price,
+        discount: tire.discount,
+        picture:
+          tire.pictures && tire.pictures[0]
+            ? base.cdnUrl + "/150x150/" + tire.pictures[0]
+            : "/images/no-product.jpg",
+      };
+      cartAdd(cartData);
+      router.push("/cart");
+    }
+  };
 
   if (loading === true) {
     return (
@@ -144,8 +189,12 @@ export default function Page({ params: { slug } }) {
 
                 <div className="divider-dashed" role="separator"></div>
                 <div className="product-shop-btns">
-                  <button className="cart-btn">Сагсанд нэмэх</button>
-                  <button className="shop-btn">Худалдан авах</button>
+                  <button className="cart-btn" onClick={() => handleCart()}>
+                    Сагсанд нэмэх
+                  </button>
+                  <button className="shop-btn" onClick={() => handleShop()}>
+                    Худалдан авах
+                  </button>
                 </div>
                 <div className="divider-dashed" role="separator"></div>
                 <div className="product-services">

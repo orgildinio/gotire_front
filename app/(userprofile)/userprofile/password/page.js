@@ -61,61 +61,61 @@ export default function Page() {
             <span>
               Сүүлд өөрчлөлт хийгдсэн {userData && userData.updateAt}{" "}
             </span>
-            <div className="divider-dot"> </div>
-            <Form
-              name="basic"
-              className="user-edit-form"
-              initialValues={{
-                remember: true,
-              }}
-              autoComplete="off"
-              form={form}
-            >
-              <div className="row">
-                <div className="col-md-6">
-                  <Form.Item
-                    name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Шинэ нууц үгээ оруулна уу!",
-                      },
-                    ]}
-                  >
-                    <Input.Password
-                      size="large"
-                      style={{ width: "100%", borderRadius: "2px" }}
-                      placeholder="Шинэ нууц үгээ оруулна уу"
-                    />
-                  </Form.Item>
-                </div>
-                <div className="col-md-6">
-                  <Form.Item
-                    name="confPassword"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Баталгаажуулах нууц үгээ оруулна уу уу!",
-                      },
-                    ]}
-                  >
-                    <Input.Password
-                      size="large"
-                      style={{ width: "100%", borderRadius: "2px" }}
-                      placeholder="Шинэ нууц үгээ баталгаажуулах"
-                    />
-                  </Form.Item>
-                </div>
+          </div>
+          <div className="divider-dot"> </div>
+          <Form
+            name="basic"
+            className="user-edit-form"
+            initialValues={{
+              remember: true,
+            }}
+            autoComplete="off"
+            form={form}
+          >
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Шинэ нууц үгээ оруулна уу!",
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    size="large"
+                    style={{ width: "100%", borderRadius: "2px" }}
+                    placeholder="Шинэ нууц үгээ оруулна уу"
+                  />
+                </Form.Item>
               </div>
-            </Form>
-            <div className="profile-card-footer">
-              <button onClick={() => router.back()} className="back-btn">
-                Буцах
-              </button>
-              <button className="change-btn" size="large" onClick={changeData}>
-                Шинэчлэх
-              </button>
+              <div className="col-md-6">
+                <Form.Item
+                  name="confPassword"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Баталгаажуулах нууц үгээ оруулна уу уу!",
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    size="large"
+                    style={{ width: "100%", borderRadius: "2px" }}
+                    placeholder="Шинэ нууц үгээ баталгаажуулах"
+                  />
+                </Form.Item>
+              </div>
             </div>
+          </Form>
+          <div className="profile-card-footer">
+            <button onClick={() => router.back()} className="back-btn">
+              Буцах
+            </button>
+            <button className="change-btn" size="large" onClick={changeData}>
+              Шинэчлэх
+            </button>
           </div>
         </div>
       </div>

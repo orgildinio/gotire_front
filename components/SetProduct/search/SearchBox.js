@@ -13,7 +13,7 @@ const SearchBox = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  console.log(search);
+
   useEffect(() => {
     const fetchData = async () => {
       const { categories: cat } = await getCategory("setproduct");

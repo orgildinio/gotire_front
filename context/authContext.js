@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [cookies, removeCookie] = useCookies(["gotiretoken"]);
   const { setError, setAlert, setContentLoad } = useNotificationContext();
   const [user, setUser] = useState(null);
-  const [isCourse, setIsCourse] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
   const [code, setCode] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
@@ -18,8 +17,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (cookies.gotiretoken) {
       checkToken(cookies.gotiretoken);
-    } else {
-      logOut();
     }
   }, [cookies.gotiretoken]);
 
@@ -43,7 +40,6 @@ export const AuthProvider = ({ children }) => {
     axios.get("users/logout").catch((error) => {});
     setCode(false);
     setUser(null);
-    setIsCourse(false);
     setIsPassword(false);
     setIsRedirect(false);
     removeCookie("gotiretoken");
@@ -132,18 +128,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const checkCourse = (courseId) => {
-    if (user) {
-      axios
-        .get(`users/coursecheck?userId=${user._id}&courseId=${courseId}`)
-        .then((result) => {
-          setIsCourse(true);
-        })
-        .catch((error) => {
-          setError(error);
-          setIsCourse(false);
-        });
-    }
+  const userChangePassword = (data) => {
+    setContentLoad(true);
+    axios
+      .post("users/userdata", data)
+      .then((res) => {
+        setUser(res.data.data);
+        setContentLoad(false);
+      })
+      .catch((error) => {
+        setContentLoad(false);
+        setError(errorRender(error));
+      });
+    clear();
+  };
+
+  const userInfoChange = (values) => {
+    setContentLoad(true);
+    axios
+      .put("users/userdata", values)
+      .then((res) => {
+        setUser(res.data.data);
+        setContentLoad(false);
+      })
+      .catch((error) => {
+        setContentLoad(false);
+        setError(error);
+      });
+    clear();
   };
 
   return (
@@ -152,17 +164,16 @@ export const AuthProvider = ({ children }) => {
         logOut,
         loginUser,
         userRegister,
+        userChangePassword,
+        userInfoChange,
         getUser,
         code,
         setCode,
         user,
         phoneCheck,
-        checkCourse,
         forgetPassword,
         isPassword,
         setIsPassword,
-        setIsCourse,
-        isCourse,
         isRedirect,
         setIsRedirect,
       }}
