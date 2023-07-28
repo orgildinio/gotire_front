@@ -25,8 +25,8 @@ const MobileFooter = () => {
             }`}
             onClick={() => router.push("/")}
           >
-            <img src="/images/search.png" />
-            Хайх
+            <img src="/images/car.png" />
+            Дугуй обуд
           </div>
           <div
             className={`mobile-footer-item ${
