@@ -21,9 +21,9 @@ const MobileFooter = () => {
           </div>
           <div
             className={`mobile-footer-item ${
-              pathname === "/search" && "active"
+              pathname === "/setproducts" && "active"
             }`}
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/setproducts")}
           >
             <img src="/images/car.png" />
             Дугуй обуд
