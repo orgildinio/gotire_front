@@ -2548,6 +2548,7 @@ margin-bottom: 30px;
   pointer-events: none;
   position: relative;
   width: 680px;
+  z-index: 1000000000000;
 }
 
 .payModal-content {
@@ -3225,6 +3226,9 @@ margin-bottom: 30px;
 }
 
 @media (max-width: 576px) {
+  .payModal{
+    width: 85%;
+  }
   .pay-modal-wrap {
       bottom: 0;
       left: 0;
