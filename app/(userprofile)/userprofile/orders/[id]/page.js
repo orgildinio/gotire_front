@@ -20,6 +20,7 @@ export default function Page({ params: { id } }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    setVisible(false);
     const fetchData = async () => {
       setContentLoad(true);
       const result = await axios.get(`/orders/user/${id}`);

@@ -36,10 +36,10 @@ export default function Page() {
 
         <div className="custom-container">
           <div className="row">
-            <div className="col-xl-2 col-lg-12">
+            <div className="col-xl-3 col-lg-12">
               <SearchBox />
             </div>
-            <div className="col-xl-10 col-lg-12">
+            <div className="col-xl-9 col-lg-12">
               <ProductList />
             </div>
           </div>

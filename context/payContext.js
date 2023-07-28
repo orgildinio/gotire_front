@@ -45,6 +45,7 @@ export const PayProvider = ({ children }) => {
         lastName: info.lastName,
         phoneNumber: info.phoneNumber,
         email: info.email,
+        address: info.address,
         delivery,
         increase,
       };

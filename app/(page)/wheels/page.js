@@ -29,10 +29,10 @@ export default function Page() {
             </div>
           </div>
           <div className="row main-wheels">
-            <div className="col-xl-2 col-lg-12">
+            <div className="col-xl-3 col-lg-12">
               <SearchWheelBox />
             </div>
-            <div className="col-xl-10 col-lg-12">
+            <div className="col-xl-9 col-lg-12">
               <WheelList />
             </div>
           </div>

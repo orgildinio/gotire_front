@@ -1751,6 +1751,10 @@ page_detials_header h5{
   position: relative;
 }
 
+.bill-product img{
+  width: 150px;
+}
+
 
 
 .bill-product span{
