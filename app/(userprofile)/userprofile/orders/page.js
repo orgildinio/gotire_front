@@ -56,19 +56,23 @@ export default function Page() {
               data.createAt &&
               moment(el.createAt).utcOffset("+0800").format("YYYY-MM-DD ");
 
-            if (el.paid === true) {
-              type = "Захиалга амжилттай";
-            } else if (el.paid === false && createAt >= currentDate) {
-              type = "Захиалга хүчингүй болсон";
-            } else if (el.paid === false && createAt < currentDate) {
-              type = "Захиалга хүчингүй болсон";
-            } else if (el.paid === false) {
+            if (data.paid === false) {
               type = "Төлбөр хүлээгдэж байна";
+            }
+
+            if (data.paid === true) {
+              type = "Захиалга амжилттай";
+            } else if (data.paid === false && createAt >= currentDate) {
+              type = "Төлбөр хүлээгдэж байна";
+            }
+
+            if (data.paid === false && createAt < currentDate) {
+              type = "Захиалга хүчингүй болсон";
             } else {
               type = "Төлбөр төлөгдөөгүй";
             }
 
-            if (el.status === false && el.paid === false) {
+            if (data.status === false && data.paid === false) {
               type = "Захиалга цуцлагдсан";
             }
 
