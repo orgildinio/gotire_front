@@ -21,6 +21,7 @@ import { SearchSetProductProvider } from "context/searchSetProductContext";
 import { SearchProductProvider } from "context/searchProductContext";
 import { Suspense } from "react";
 import Loader from "components/Generals/Loader";
+import Script from "next/script";
 
 export const metadata = {
   title: `Gotire.mn - автомашины дугуй, обудын худалдаа`,
@@ -30,6 +31,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-0DFS7DK8C1"
+      ></Script>
+      <Script>
+        strategy="afterInteractive" window.dataLayer = window.dataLayer || [];
+        function gtag()
+        {dataLayer.push(arguments)}
+        gtag('js', new Date()); gtag('config', 'G-0DFS7DK8C1');
+      </Script>
       <body>
         <Suspense fallback={<Loader />}>
           <NotificationProvider>
