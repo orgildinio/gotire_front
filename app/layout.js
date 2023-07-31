@@ -32,10 +32,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Script
-        strategy="afterInteractive"
+        async
         src="https://www.googletagmanager.com/gtag/js?id=G-0DFS7DK8C1"
       ></Script>
-      <Script strategy="afterInteractive">
+      <Script async>
         window.dataLayer = window.dataLayer || []; function gtag()
         {dataLayer.push(arguments)}
         gtag('js', new Date()); gtag('config', 'G-0DFS7DK8C1');
