@@ -8,6 +8,9 @@ import MobileProductSearch from "components/Product/MobileProductSearch";
 export default function Page() {
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <MobileProductSearch />
       <section className="pd-4">
         <div className="custom-container">
