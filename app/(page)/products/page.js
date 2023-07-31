@@ -4,6 +4,7 @@ import SearchBox from "components/Product/search/SearchBox";
 import ProductList from "components/Product/ProductList";
 import Link from "next/link";
 import MobileProductSearch from "components/Product/MobileProductSearch";
+import GoogleAnalytics from "components/GoogleAnalytics";
 
 export default function Page() {
   return (

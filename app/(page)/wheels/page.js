@@ -1,5 +1,6 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GoogleAnalytics from "components/GoogleAnalytics";
 import MobileWheelSearch from "components/Wheel/MobileWheelSearch";
 import SearchWheelBox from "components/Wheel/search/SearchWheelBox";
 import WheelList from "components/Wheel/WheelList";
@@ -8,6 +9,9 @@ import Link from "next/link";
 export default function Page() {
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <MobileWheelSearch />
       <section className="pd-4">
         <div className="custom-container">
