@@ -4,6 +4,7 @@ import { faClock, faEye } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BlockLoad from "components/Generals/BlockLoad";
 import Loader from "components/Generals/Loader";
+import GoogleAnalytics from "components/GoogleAnalytics";
 import { htmlToText } from "html-to-text";
 import base from "lib/base";
 import { getMenu } from "lib/menus";
@@ -49,6 +50,9 @@ export default function Page() {
 
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <div
         className="pageDetailsHeader"
         style={{

@@ -10,8 +10,9 @@ import { Suspense } from "react";
 export default function Page() {
   return (
     <>
-      <GoogleAnalytics ga_id={`G-0DFS7DK8C1`} />
-
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <HomeMenu />
       {/* <SearchHeaderBox /> */}
       <MakeTopList />

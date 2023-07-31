@@ -3,6 +3,7 @@ import { faClock, faEye } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "components/Generals/Loader";
 import Share from "components/Generals/Share";
+import GoogleAnalytics from "components/GoogleAnalytics";
 import NotFound from "components/Service/notFound";
 import ServiceDetails from "components/Service/service-details";
 import base from "lib/base";
@@ -42,6 +43,9 @@ export default function Page({ params: { id } }) {
   } else {
     return (
       <>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+          <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        ) : null}
         <main>
           <ServiceDetails page={news} />
         </main>
