@@ -5,6 +5,7 @@ import { useAuthContext } from "context/authContext";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { useNotificationContext } from "context/notificationContext";
+import GoogleAnalytics from "components/GoogleAnalytics";
 
 export default function Page() {
   const { userRegister, isRedirect, setIsRedirect } = useAuthContext();
@@ -30,6 +31,9 @@ export default function Page() {
 
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <div
         className="pageDetailsHeader"
         style={{

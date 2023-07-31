@@ -4,10 +4,14 @@ import Link from "next/link";
 import SearchBox from "components/SetProduct/search/SearchBox";
 import SetProductList from "components/SetProduct/setProductList";
 import MobileSetProductSearch from "components/SetProduct/MobileSetProductSearch";
+import GoogleAnalytics from "components/GoogleAnalytics";
 
 export default function Page() {
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <MobileSetProductSearch />
       <section className="pd-4">
         <div className="custom-container">

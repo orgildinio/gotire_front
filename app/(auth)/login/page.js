@@ -18,6 +18,7 @@ import { toastControl } from "lib/toastControl";
 import { useCookies } from "react-cookie";
 import { redirect } from "next/navigation";
 import { useNotificationContext } from "context/notificationContext";
+import GoogleAnalytics from "components/GoogleAnalytics";
 
 export default function Page() {
   const { loginUser, user } = useAuthContext();
@@ -43,6 +44,9 @@ export default function Page() {
 
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <div
         className="pageDetailsHeader"
         style={{

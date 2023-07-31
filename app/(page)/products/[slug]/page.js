@@ -3,6 +3,7 @@ import { faArrowLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loader from "components/Generals/Loader";
 import NotFound from "components/Generals/Notfound";
+import GoogleAnalytics from "components/GoogleAnalytics";
 import RandomTire from "components/Product/RandomTire";
 import { useCartContext } from "context/cartContext";
 import base from "lib/base";
@@ -113,6 +114,9 @@ export default function Page({ params: { slug } }) {
 
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <section>
         <div className="container">
           <div className="row">

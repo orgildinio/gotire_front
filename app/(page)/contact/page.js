@@ -1,5 +1,6 @@
 import Loading from "app/loading";
 import ContactPage from "components/Contact/ContactPage";
+import GoogleAnalytics from "components/GoogleAnalytics";
 
 import { getWebInfo } from "lib/webinfo";
 import { Suspense, use } from "react";
@@ -8,6 +9,9 @@ export default async function Page() {
   const { webInfo } = await getWebInfo();
   return (
     <div>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <main>
         <Suspense fallback={<Loading />}>
           <div
