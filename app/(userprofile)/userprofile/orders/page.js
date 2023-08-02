@@ -53,18 +53,18 @@ export default function Page() {
             let type = "";
             const currentDate = new Date().toJSON().slice(0, 10);
             let createAt =
-              data.createAt &&
-              moment(el.createAt).utcOffset("+0800").format("YYYY-MM-DD ");
+              el.createAt &&
+              moment(el.createAt).utcOffset("+0800").format("YYYY-MM-DD");
 
-            if (data.paid === false) {
+            if (el.paid === false) {
               type = "Төлбөр хүлээгдэж байна";
-            } else if (data.paid === true) {
+            } else if (el.paid === true) {
               type = "Захиалга амжилттай";
-            } else if (data.paid === false && createAt >= currentDate) {
+            } else if (el.paid === false && createAt >= currentDate) {
               type = "Төлбөр хүлээгдэж байна";
-            } else if (data.paid === false && createAt < currentDate) {
+            } else if (el.paid === false && createAt < currentDate) {
               type = "Захиалга хүчингүй болсон";
-            } else if (data.status === false && data.paid === false) {
+            } else if (el.status === false && el.paid === false) {
               type = "Захиалга цуцлагдсан";
             }
 
