@@ -79,6 +79,7 @@ export default function Page({ params: { id } }) {
 
     return (
       <>
+        {createAt + " " + currentDate}
         <div className="page_detials_header">
           <div className="page_header_left">
             <button
