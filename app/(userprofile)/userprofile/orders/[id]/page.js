@@ -62,7 +62,8 @@ export default function Page({ params: { id } }) {
     let type = "";
     const currentDate = new Date(new Date().toJSON().slice(0, 10));
     let createAt =
-      data.createAt && new Date(data.createAt.toJSON().slice(0, 10));
+      data.createAt &&
+      new Date(moment(data.createAt).utcOffset("+0800").format("YYYY-MM-DD"));
 
     if (data.paid === false) {
       type = "Төлбөр хүлээгдэж байна";
@@ -78,7 +79,6 @@ export default function Page({ params: { id } }) {
 
     return (
       <>
-        {createAt + " " + currentDate}
         <div className="page_detials_header">
           <div className="page_header_left">
             <button
