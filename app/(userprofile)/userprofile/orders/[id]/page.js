@@ -65,15 +65,15 @@ export default function Page({ params: { id } }) {
       data.createAt &&
       new Date(moment(data.createAt).utcOffset("+0800").format("YYYY-MM-DD"));
 
-    if (data.paid === false) {
-      type = "Төлбөр хүлээгдэж байна";
-    } else if (data.paid === true) {
+    if (data.paid === true) {
       type = "Захиалга амжилттай";
     } else if (data.status === false && data.paid === false) {
       type = "Захиалга цуцлагдсан";
     } else if (data.paid === false && createAt < currentDate) {
       type = "Захиалга хүчингүй болсон";
     } else if (data.paid === false && createAt >= currentDate) {
+      type = "Төлбөр хүлээгдэж байна";
+    } else if (data.paid === false) {
       type = "Төлбөр хүлээгдэж байна";
     }
 

@@ -56,15 +56,15 @@ export default function Page() {
               el.createAt &&
               moment(el.createAt).utcOffset("+0800").format("YYYY-MM-DD");
 
-            if (el.paid === false) {
-              type = "Төлбөр хүлээгдэж байна";
-            } else if (el.paid === true) {
+            if (el.paid === true) {
               type = "Захиалга амжилттай";
             } else if (el.status === false && el.paid === false) {
               type = "Захиалга цуцлагдсан";
             } else if (el.paid === false && createAt < currentDate) {
               type = "Захиалга хүчингүй болсон";
             } else if (el.paid === false && createAt >= currentDate) {
+              type = "Төлбөр хүлээгдэж байна";
+            } else if (el.paid === false) {
               type = "Төлбөр хүлээгдэж байна";
             }
 
