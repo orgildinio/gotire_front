@@ -60,10 +60,10 @@ export default function Page({ params: { id } }) {
 
   if (data) {
     let type = "";
-    const currentDate = new Date().toJSON().slice(0, 10);
+    const currentDate = new Date(new Date().toJSON().slice(0, 10));
     let createAt =
       data.createAt &&
-      moment(data.createAt).utcOffset("+0800").format("YYYY-MM-DD");
+      new Date(moment(data.createAt).utcOffset("+0800").format("YYYY-MM-DD"));
 
     if (data.paid === false) {
       type = "Төлбөр хүлээгдэж байна";
