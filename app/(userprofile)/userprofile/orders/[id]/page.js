@@ -69,12 +69,12 @@ export default function Page({ params: { id } }) {
       type = "Төлбөр хүлээгдэж байна";
     } else if (data.paid === true) {
       type = "Захиалга амжилттай";
-    } else if (data.paid === false && createAt >= currentDate) {
-      type = "Төлбөр хүлээгдэж байна";
-    } else if (data.paid === false && createAt < currentDate) {
-      type = "Захиалга хүчингүй болсон";
     } else if (data.status === false && data.paid === false) {
       type = "Захиалга цуцлагдсан";
+    } else if (data.paid === false && createAt < currentDate) {
+      type = "Захиалга хүчингүй болсон";
+    } else if (data.paid === false && createAt >= currentDate) {
+      type = "Төлбөр хүлээгдэж байна";
     }
 
     return (
