@@ -62,8 +62,7 @@ export default function Page({ params: { id } }) {
     let type = "";
     const currentDate = new Date(new Date().toJSON().slice(0, 10));
     let createAt =
-      data.createAt &&
-      new Date(moment(data.createAt).utcOffset("+0800").format("YYYY-MM-DD"));
+      data.createAt && new Date(data.createAt.toJSON().slice(0, 10));
 
     if (data.paid === false) {
       type = "Төлбөр хүлээгдэж байна";
